@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "806636567829",
+    "firebase_url": "https://aduinoproject-918cc.firebaseio.com",
+    "project_id": "aduinoproject-918cc",
+    "storage_bucket": "aduinoproject-918cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:806636567829:android:89eedf991c7f8701",
+        "android_client_info": {
+          "package_name": "naveropenapi.example.com.aduinoproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "806636567829-kjod092dtmie8nig67ukk4pl85kdeob4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "naveropenapi.example.com.aduinoproject",
+            "certificate_hash": "19251bdffe76ca4e17ad2e3dbb89ea30c110af75"
+          }
+        },
+        {
+          "client_id": "806636567829-1b2gptjj371g5a88qcnotulj73ek5p3h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMF2xkhLh3wrSnbFhflZce_jg6WsZ0L_Y"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "806636567829-1b2gptjj371g5a88qcnotulj73ek5p3h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
