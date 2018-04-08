@@ -40,7 +40,6 @@ public class LoginActivity extends AppCompatActivity  {
     }
 
     private void updateUI(FirebaseUser user) {
-
     }
 
 
@@ -48,12 +47,7 @@ public class LoginActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
-
         mAuth = FirebaseAuth.getInstance();
-
-
-
-
 
         //로그인 버튼 리스너
         btn_Login = (Button)findViewById(R.id.btn_login);
@@ -63,7 +57,6 @@ public class LoginActivity extends AppCompatActivity  {
                 stEmail = etEmail.getText().toString();
                 stPassword = etPassword.getText().toString();
                 loginUser(stEmail,stPassword);
-
             }
         });
 
@@ -74,7 +67,6 @@ public class LoginActivity extends AppCompatActivity  {
             public void onClick(View v) {
                 stEmail = etEmail.getText().toString();
                 stPassword = etPassword.getText().toString();
-
                 registerUser(stEmail,stPassword);
             }
         });
@@ -89,19 +81,14 @@ public class LoginActivity extends AppCompatActivity  {
                     stEmail = etEmail.getText().toString();
                     stPassword = etPassword.getText().toString();
                     loginUser(stEmail,stPassword);
-
                     return true;
                 }
                 return false;
             }
         });
-
-
         pb = (ProgressBar)findViewById(R.id.progress_main);
 
-
     }
-
     //회원 가입 메소드
     public void registerUser(String email, String password){
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -122,7 +109,6 @@ public class LoginActivity extends AppCompatActivity  {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
                     }
                 });
     }
@@ -154,10 +140,8 @@ public class LoginActivity extends AppCompatActivity  {
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
-
                     }
                 });
-
     }
 }
 

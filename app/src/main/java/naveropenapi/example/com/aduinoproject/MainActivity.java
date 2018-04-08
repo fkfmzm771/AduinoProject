@@ -39,7 +39,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements RecognitionListener {
 
-    //github 전송 테스트
+    //리스트뷰 객체 구현
     private AlbumListViewAdapter adapter;
     private ListView playListView;
     private ArrayList<AlbumListViewItem> itemList = new ArrayList<AlbumListViewItem>();
@@ -65,14 +65,18 @@ public class MainActivity extends Activity implements RecognitionListener {
 
 
     Thread mWorkerThread = null;
+    //바이트 통신을 위한 객체
     byte[] readBuffer;
     int readBufferPosition;
 
 
+    //view 객체 생성
     private EditText mEditReceive, mEditSend;
     private Button mButtonSend, voice_in;
     private ArrayList<String> arDump = new ArrayList<String>();
     private TextView statusView, resultsView;
+
+    //구글 음성 API
     private SpeechRecognizer speech;
 
     public static String BtStr = "";
