@@ -404,27 +404,22 @@ public class MainActivity extends Activity implements RecognitionListener {
     //음성인식 리스너
     @Override
     public void onReadyForSpeech(Bundle params) {
-
     }
 
     @Override
     public void onBeginningOfSpeech() {
-
     }
 
     @Override
     public void onRmsChanged(float rmsdB) {
-
     }
 
     @Override
     public void onBufferReceived(byte[] buffer) {
-
     }
 
     @Override
     public void onEndOfSpeech() {
-
     }
 
     @Override
@@ -491,14 +486,10 @@ public class MainActivity extends Activity implements RecognitionListener {
 
     @Override
     public void onPartialResults(Bundle partialResults) {
-
     }
 
     @Override
     public void onEvent(int eventType, Bundle params) {
-
     }
-
-
 }
 

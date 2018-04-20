@@ -58,13 +58,19 @@
         android:text="LOGIN" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"/>
+        android:layout_height="5dp"/>
 
     <Button
         android:id="@+id/btn_register"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="REGISTER" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/googleSignBtn"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"/>
+
 
     <ProgressBar
         android:id="@+id/progress_main"
