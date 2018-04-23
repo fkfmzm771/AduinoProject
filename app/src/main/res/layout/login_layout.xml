@@ -1,82 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#efeeee"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context="naveropenapi.example.com.aduinoproject.LoginActivity">
 
-    <TextView
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="50dp"
-        android:gravity="center"
-        android:text="BLACK CUBE Ver1.0"
-        android:textSize="30dp" />
+        android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/main_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/login_main_top"/>
+        <include
+            android:id="@+id/main_bottom"
+            android:layout_below="@id/main_top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/login_main_bottom"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:gravity="center">
+    </RelativeLayout>
 
-        <EditText
-            android:id="@+id/et_email"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:hint="E-mail"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="12dp" />
+    <include
+        android:id="@+id/login_loading_anime"
+        layout="@layout/login_loading_anime"
+        android:visibility="gone"/>
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:gravity="center">
-
-        <EditText
-            android:id="@+id/et_password"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:hint="Password (6자리 이상)"
-            android:inputType="textWebPassword"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="12dp" />
-    </android.support.design.widget.TextInputLayout>
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="LOGIN" />
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"/>
-
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="REGISTER" />
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/googleSignBtn"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"/>
-
-
-    <ProgressBar
-        android:id="@+id/progress_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:visibility="invisible" />
-
-</LinearLayout>
+</FrameLayout>

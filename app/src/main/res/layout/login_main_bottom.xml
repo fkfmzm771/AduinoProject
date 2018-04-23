@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#39414a"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/googleSignBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="@drawable/login_button_google_line"
+            android:drawableLeft="@drawable/googleg_standard_color_18"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/login_google"
+            android:textColor="#39414a"
+            android:textSize="12dp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/facebookSignBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="@drawable/login_button_facebook_line"
+            android:drawableLeft="@drawable/login_icon_facebook"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/login_face"
+            android:textColor="#ffffff"
+            android:textSize="12dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/kakaoSignBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="@drawable/login_button_kakao_line"
+            android:drawableLeft="@drawable/login_icon_kakao"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/login_kakao"
+            android:textColor="#39414a"
+            android:textSize="12dp"
+            android:textStyle="bold"/>
+
+        <LinearLayout
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/naverSignBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:background="@drawable/login_button_naver_line"
+            android:drawableLeft="@drawable/login_icon_naver"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="@string/login_naver"
+            android:textColor="#ffffff"
+            android:textSize="12dp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+</LinearLayout>

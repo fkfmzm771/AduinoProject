@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.UUID;
 // 3. UUID : Universally Unique IDentifier, 범용 고유 실별자.import java.util.UUID;
 
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -35,8 +34,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-
-
 public class MainActivity extends Activity implements RecognitionListener {
 
     //리스트뷰 객체 구현
@@ -47,24 +44,24 @@ public class MainActivity extends Activity implements RecognitionListener {
     // 사용자 정의 함수로 블루투스 활성 상태의 변경 결과를 App으로 알려줄때 식별자로 사용됨 (0보다 커야함)
     static final int REQUEST_ENABLE_BT = 10;
     int mPariedDeviceCount = 0;
-    Set<BluetoothDevice> mDevices;
+    private Set<BluetoothDevice> mDevices;
     // 폰의 블루투스 모듈을 사용하기 위한 오브젝트.
-    BluetoothAdapter mBluetoothAdapter;
+    private BluetoothAdapter mBluetoothAdapter;
     /**
      * BluetoothDevice 로 기기의 장치정보를 알아낼 수 있는 자세한 메소드 및 상태값을 알아낼 수 있다.
      * 연결하고자 하는 다른 블루투스 기기의 이름, 주소, 연결 상태 등의 정보를 조회할 수 있는 클래스.
      * 현재 기기가 아닌 다른 블루투스 기기와의 연결 및 정보를 알아낼 때 사용.
      */
-    BluetoothDevice mRemoteDevice;
+    private BluetoothDevice mRemoteDevice;
     // 스마트폰과 페어링 된 디바이스간 통신 채널에 대응 하는 BluetoothSocket
-    BluetoothSocket mSocket = null;
-    OutputStream mOutputStream = null;
-    InputStream mInputStream = null;
-    String mStrDelimiter = "\n";
+    private BluetoothSocket mSocket = null;
+    private OutputStream mOutputStream = null;
+    private InputStream mInputStream = null;
+    private String mStrDelimiter = "\n";
     char mCharDelimiter = '\n';
 
 
-    Thread mWorkerThread = null;
+    private Thread mWorkerThread = null;
     //바이트 통신을 위한 객체
     byte[] readBuffer;
     int readBufferPosition;
@@ -73,6 +70,7 @@ public class MainActivity extends Activity implements RecognitionListener {
     //view 객체 생성
     private EditText mEditReceive, mEditSend;
     private Button mButtonSend, voice_in;
+    private Button mButtonLogout;
     private ArrayList<String> arDump = new ArrayList<String>();
     private TextView statusView, resultsView;
 
@@ -92,25 +90,33 @@ public class MainActivity extends Activity implements RecognitionListener {
 
 
         adapter = new AlbumListViewAdapter(itemList);
-        playListView = (ListView)findViewById(R.id.menu_list);
+        playListView = (ListView) findViewById(R.id.menu_list);
 
-        adapter.addItem(null,"기능 추가","예시1");
-        adapter.addItem(null,"LED 설정","예시2");
-        adapter.addItem(null,"전원제어","예시3");
-        adapter.addItem(null,"기기 연결","예시4");
+        adapter.addItem(null, "기능 추가", "예시1");
+        adapter.addItem(null, "LED 설정", "예시2");
+        adapter.addItem(null, "전원제어", "예시3");
+        adapter.addItem(null, "기기 연결", "예시4");
 
 
         playListView.setAdapter(adapter);
 
-
-
-
         mEditReceive = (EditText) findViewById(R.id.receiveString);
         mEditSend = (EditText) findViewById(R.id.sendString);
         mButtonSend = (Button) findViewById(R.id.sendButton);
+        mButtonLogout = (Button) findViewById(R.id.btn_logout);
 
+        mButtonLogout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginActivity.mAuth.signOut();
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        //아두이노 문자 전송
         mButtonSend.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 // 문자열 전송하는 함수(쓰레드 사용 x)
@@ -143,7 +149,6 @@ public class MainActivity extends Activity implements RecognitionListener {
             }
         });
     }
-
 
 
     // 블루투스 장치의 이름이 주어졌을때 해당 블루투스 장치 객체를 페어링 된 장치 목록에서 찾아내는 코드.
@@ -253,7 +258,6 @@ public class MainActivity extends Activity implements RecognitionListener {
                                 }
                             }
                         }
-
                     } catch (Exception e) {    // 데이터 수신 중 오류 발생.
                         Toast.makeText(getApplicationContext(), "데이터 수신 중 오류가 발생 했습니다.", Toast.LENGTH_LONG).show();
                         finish();            // App 종료.
@@ -345,7 +349,6 @@ public class MainActivity extends Activity implements RecognitionListener {
         }
     }
 
-
     // onDestroy() : 어플이 종료될때 호출 되는 함수.
     //               블루투스 연결이 필요하지 않는 경우 입출력 스트림 소켓을 닫아줌.
     @Override
@@ -389,7 +392,6 @@ public class MainActivity extends Activity implements RecognitionListener {
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
                     for (int i = 0; i < text.size(); i++) {
-//                        Log.e("GoogleActivity", "onActivityResult text : " + text.get(i));
                         mEditSend.setText(text.get(i));
                         BtStr = text.get(i);
                         sendData(BtStr);
