@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#718bac"
     android:orientation="vertical"
-    tools:context="naveropenapi.example.com.aduinoproject.LoginActivity">
+    tools:context="naveropenapi.example.com.aduinoproject.Login.LoginActivity">
 
 
-    <include layout="@layout/main_bottom"/>
-    <include
-        android:visibility="gone"
-        layout="@layout/login_loading_anime"/>
+    <!-- 툴바, 추가된 소스 -->
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
+            <include
+                layout="@layout/main_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <include
+                layout="@layout/main_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <include
+            layout="@layout/login_loading_anime"
+            android:visibility="gone" />
 
 </FrameLayout>

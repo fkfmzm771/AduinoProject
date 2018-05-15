@@ -1,0 +1,48 @@
+package naveropenapi.example.com.aduinoproject.VoiceApi;
+
+import android.content.Context;
+import android.content.Intent;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
+import android.view.View;
+
+import naveropenapi.example.com.aduinoproject.Login.GoogleRecognition;
+
+/**
+ * Created by hyunungLim on 2018-05-15.
+ */
+
+public class GoogleVoice {
+
+    //구글 음성 API
+    private SpeechRecognizer speech;
+
+    public static String BtStr = "";
+
+    private Intent recognizerIntent;
+    public final static int RESULT_SPEECH = 1000;
+    private Context mContext;
+
+
+    public GoogleVoice(Context context){
+
+        mContext = context;
+        GoogleRecognition gooreco = new GoogleRecognition();
+
+        speech = SpeechRecognizer.createSpeechRecognizer(context);
+        speech.setRecognitionListener(gooreco);
+    }
+
+    public Intent VoiceBtn(){
+
+        recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "ko-KR"); //언어지정입니다.
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, mContext.getPackageName());
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+        recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);   //검색을 말한 결과를 보여주는 갯수
+
+        return recognizerIntent;
+
+
+    }
+}

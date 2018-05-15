@@ -1,4 +1,4 @@
-package naveropenapi.example.com.aduinoproject;
+package naveropenapi.example.com.aduinoproject.Ui;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,20 +13,22 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import naveropenapi.example.com.aduinoproject.R;
+
 /**
  * Created by MIT-18 on 2016-09-12.
  */
-public class AlbumListViewAdapter extends BaseAdapter {
-    private ArrayList<AlbumListViewItem> listViewItemList;
+public class ListViewAdapter extends BaseAdapter {
+    private ArrayList<ListViewItem> listViewItemList;
 
     private boolean isCheckedConfrim;
     private boolean[] checkitemPosition;
 
 
     // ListViewAdapter의 생성자
-    public AlbumListViewAdapter(ArrayList<AlbumListViewItem> itemList) {
+    public ListViewAdapter(ArrayList<ListViewItem> itemList) {
         if (itemList == null) {
-            listViewItemList = new ArrayList<AlbumListViewItem>();
+            listViewItemList = new ArrayList<ListViewItem>();
         } else {
             listViewItemList = itemList;
         }
@@ -66,7 +68,7 @@ public class AlbumListViewAdapter extends BaseAdapter {
         holder.m_title = (TextView) convertView.findViewById(R.id.album_textView1);
         holder.m_desc = (TextView) convertView.findViewById(R.id.album_textView2);
 
-        AlbumListViewItem listViewItem = listViewItemList.get(position);
+        ListViewItem listViewItem = listViewItemList.get(position);
 
         holder.m_Image.setImageBitmap(listViewItem.getIcon());
         holder.m_title.setText(listViewItem.getTitle());
@@ -92,7 +94,7 @@ public class AlbumListViewAdapter extends BaseAdapter {
 
     // 아이템 데이터 추가를 위한 함수. 개발자가 원하는대로 작성 가능.
     public void addItem(String icon, String title, String desc) {
-        AlbumListViewItem item = new AlbumListViewItem();
+        ListViewItem item = new ListViewItem();
         item.setIcon(icon);
         item.setTitle(title);
         item.setDesc(desc);

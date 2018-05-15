@@ -21,10 +21,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -33,13 +31,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import naveropenapi.example.com.aduinoproject.Login.GoogleRecognition;
+import naveropenapi.example.com.aduinoproject.Login.LoginActivity;
+import naveropenapi.example.com.aduinoproject.Ui.ListViewAdapter;
+import naveropenapi.example.com.aduinoproject.Ui.ListViewItem;
+import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
 
-public class MainActivity extends Activity implements RecognitionListener {
+import static naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice.BtStr;
+
+
+public class MainActivity extends Activity{
 
     //리스트뷰 객체 구현
-    private AlbumListViewAdapter adapter;
-    private ListView playListView;
-    private ArrayList<AlbumListViewItem> itemList = new ArrayList<AlbumListViewItem>();
+    private ListViewAdapter adapter;
+    private ListView menuListView;
+    private ArrayList<ListViewItem> itemList = new ArrayList<ListViewItem>();
 
     // 사용자 정의 함수로 블루투스 활성 상태의 변경 결과를 App으로 알려줄때 식별자로 사용됨 (0보다 커야함)
     static final int REQUEST_ENABLE_BT = 10;
@@ -74,13 +80,7 @@ public class MainActivity extends Activity implements RecognitionListener {
     private ArrayList<String> arDump = new ArrayList<String>();
     private TextView statusView, resultsView;
 
-    //구글 음성 API
-    private SpeechRecognizer speech;
 
-    public static String BtStr = "";
-
-    private Intent recognizerIntent;
-    private final int RESULT_SPEECH = 1000;
 
 
     @Override
@@ -89,8 +89,8 @@ public class MainActivity extends Activity implements RecognitionListener {
         setContentView(R.layout.activity_main);
 
 
-        adapter = new AlbumListViewAdapter(itemList);
-        playListView = (ListView) findViewById(R.id.menu_list);
+        adapter = new ListViewAdapter(itemList);
+        menuListView = (ListView) findViewById(R.id.menu_list);
 
         adapter.addItem(null, "기능 추가", "예시1");
         adapter.addItem(null, "LED 설정", "예시2");
@@ -98,13 +98,12 @@ public class MainActivity extends Activity implements RecognitionListener {
         adapter.addItem(null, "기기 연결", "예시4");
 
 
-        playListView.setAdapter(adapter);
+        menuListView.setAdapter(adapter);
 
         mEditReceive = (EditText) findViewById(R.id.receiveString);
         mEditSend = (EditText) findViewById(R.id.sendString);
         mButtonSend = (Button) findViewById(R.id.sendButton);
         mButtonLogout = (Button) findViewById(R.id.btn_logout);
-
         mButtonLogout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,24 +129,17 @@ public class MainActivity extends Activity implements RecognitionListener {
         checkBluetooth();
 
         //구글 음성인식 시작
+        final GoogleVoice googleVoice = new GoogleVoice(this);
 
-        speech = SpeechRecognizer.createSpeechRecognizer(this);
-        speech.setRecognitionListener(this);
-
-        voice_in = (Button) findViewById(R.id.voice_in);
-        voice_in.setOnClickListener(new OnClickListener() {
+        findViewById(R.id.voice_in).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 arDump.clear();
                 mEditSend.setText("");
-                recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "ko-KR"); //언어지정입니다.
-                recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
-                recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
-                recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);   //검색을 말한 결과를 보여주는 갯수
-                startActivityForResult(recognizerIntent, RESULT_SPEECH);
+                startActivityForResult(googleVoice.VoiceBtn(), GoogleVoice.RESULT_SPEECH);
             }
         });
+
     }
 
 
@@ -327,7 +319,7 @@ public class MainActivity extends Activity implements RecognitionListener {
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         if (mBluetoothAdapter == null) {  // 블루투스 미지원
             Toast.makeText(getApplicationContext(), "기기가 블루투스를 지원하지 않습니다.", Toast.LENGTH_LONG).show();
-            finish();  // 앱종료
+//            finish();  // 앱종료
         } else { // 블루투스 지원
             /** isEnable() : 블루투스 모듈이 활성화 되었는지 확인.
              *               true : 지원 ,  false : 미지원
@@ -386,7 +378,7 @@ public class MainActivity extends Activity implements RecognitionListener {
                     Toast.makeText(getApplicationContext(), "블루투스를 사용할 수 없어 프로그램을 종료합니다", Toast.LENGTH_LONG).show();
                     finish();
                 }
-            case RESULT_SPEECH:
+            case GoogleVoice.RESULT_SPEECH:
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> text = data
                             .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -402,96 +394,5 @@ public class MainActivity extends Activity implements RecognitionListener {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-
-    //음성인식 리스너
-    @Override
-    public void onReadyForSpeech(Bundle params) {
-    }
-
-    @Override
-    public void onBeginningOfSpeech() {
-    }
-
-    @Override
-    public void onRmsChanged(float rmsdB) {
-    }
-
-    @Override
-    public void onBufferReceived(byte[] buffer) {
-    }
-
-    @Override
-    public void onEndOfSpeech() {
-    }
-
-    @Override
-    public void onError(int error) {
-        String message;
-
-        switch (error) {
-
-            case SpeechRecognizer.ERROR_AUDIO:
-                message = "오디오 에러";
-                break;
-
-            case SpeechRecognizer.ERROR_CLIENT:
-                message = "클라이언트 에러";
-                break;
-
-            case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
-                message = "퍼미션없음";
-                break;
-
-            case SpeechRecognizer.ERROR_NETWORK:
-                message = "네트워크 에러";
-                break;
-
-            case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
-                message = "네트워크 타임아웃";
-                break;
-
-            case SpeechRecognizer.ERROR_NO_MATCH:
-                message = "에러를 찾을 수 없음";
-                ;
-                break;
-
-            case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
-                message = "바쁘대";
-                break;
-
-            case SpeechRecognizer.ERROR_SERVER:
-                message = "서버이상";
-                ;
-                break;
-
-            case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
-                message = "말하는 시간초과";
-                break;
-
-            default:
-                message = "알수없음";
-                break;
-        }
-
-        Log.e("GoogleActivity", "SPEECH ERROR : " + message);
-    }
-
-
-    @Override
-    public void onResults(Bundle results) {
-        ArrayList<String> matches = results
-                .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-        for (int i = 0; i < matches.size(); i++) {
-            Log.e("GoogleActivity", "onResults text : " + matches.get(i));
-        }
-    }
-
-    @Override
-    public void onPartialResults(Bundle partialResults) {
-    }
-
-    @Override
-    public void onEvent(int eventType, Bundle params) {
-    }
 }
 

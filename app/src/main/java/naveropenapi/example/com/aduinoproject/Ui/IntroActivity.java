@@ -1,11 +1,13 @@
-package naveropenapi.example.com.aduinoproject;
+package naveropenapi.example.com.aduinoproject.Ui;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+
+import naveropenapi.example.com.aduinoproject.Login.LoginActivity;
+import naveropenapi.example.com.aduinoproject.R;
 
 /**
  * Created by fkfmz on 2018-04-24.

@@ -1,4 +1,4 @@
-package naveropenapi.example.com.aduinoproject;
+package naveropenapi.example.com.aduinoproject.Ui;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 /**
  * Created by MIT-18 on 2016-09-12.
  */
-public class AlbumListViewItem {
+public class ListViewItem {
 
     private Bitmap iconBitmap;
     private String titleStr;
