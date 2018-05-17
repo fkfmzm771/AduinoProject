@@ -4,24 +4,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
-import android.view.View;
 
-import naveropenapi.example.com.aduinoproject.Login.GoogleRecognition;
+import ai.api.AIListener;
+import ai.api.model.AIError;
+import ai.api.model.AIResponse;
 
 /**
  * Created by hyunungLim on 2018-05-15.
  */
 
-public class GoogleVoice {
+public class GoogleVoice{
+
 
     //구글 음성 API
     private SpeechRecognizer speech;
-
-    public static String BtStr = "";
-
     private Intent recognizerIntent;
-    public final static int RESULT_SPEECH = 1000;
     private Context mContext;
+    public final static int RESULT_SPEECH = 1000;
 
 
     public GoogleVoice(Context context){
@@ -43,6 +42,6 @@ public class GoogleVoice {
 
         return recognizerIntent;
 
-
     }
+
 }

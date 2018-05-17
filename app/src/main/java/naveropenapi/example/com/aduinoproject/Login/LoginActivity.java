@@ -37,11 +37,9 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-
-import naveropenapi.example.com.aduinoproject.Ui.IdCheck;
 import naveropenapi.example.com.aduinoproject.MainActivity;
 import naveropenapi.example.com.aduinoproject.R;
+import naveropenapi.example.com.aduinoproject.Ui.IdCheck;
 
 public class LoginActivity extends AppCompatActivity {
     final static String TAG = "MainActivityTag";
@@ -60,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
     //firebaseDatabase
     public static FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private List<LoginModel> loginToken;
 
     //firebaseAuth
     public static FirebaseAuth mAuth;
