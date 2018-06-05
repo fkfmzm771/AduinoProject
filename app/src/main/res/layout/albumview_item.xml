@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
         android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f2f1f6"
         android:orientation="vertical">
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/drop_shadow"
+            android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:layout_margin="1dp"
-                android:background="#ffffff"
+                android:background
+                    ="#424146"
                 android:orientation="horizontal">
 
                 <CheckBox
@@ -43,32 +42,31 @@
                     android:background="#f7f6ed">
 
                     <ImageView
-
                         android:id="@+id/album_imageView1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="4"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginTop="15dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_weight="4"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_marginTop="15dp"
                         android:id="@+id/album_textView1"
                         android:layout_width="193dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
                         android:gravity="center_vertical"
                         android:paddingLeft="5dp"
                         android:text="new text"
-                        android:textColor="#62606b"
+                        android:textColor="#ffffff"
                         android:textSize="25dp" />
 
                     <TextView
@@ -82,35 +80,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    android:background="#f9f8fe"
-                    android:orientation="vertical">
-
-                    <LinearLayout
-                        android:layout_margin="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/plus_button_alpha" />
-
-                    <LinearLayout
-                        android:background="#ffffff"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"/>
-
-                    <LinearLayout
-                        android:layout_margin="5dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@drawable/album_hart" />
-
-                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

@@ -2,15 +2,15 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="#000000"
+    android:id="@+id/loadingPage"
+    android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/txt_test"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:text="AR실행창 클릭시 실행"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/loadGif"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 

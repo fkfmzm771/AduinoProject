@@ -1,45 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#718bac"
+    android:background="#39414a"
     android:orientation="vertical"
-    tools:context="naveropenapi.example.com.aduinoproject.Login.LoginActivity">
+    tools:context="naveropenapi.example.com.aduinoproject.MainActivity">
 
 
-    <!-- 툴바, 추가된 소스 -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/my_toolbar"
+    <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:elevation="4dp"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
-        <LinearLayout
+
+        <!-- 툴바, 추가된 소스 -->
+
+        <com.sothree.slidinguppanel.SlidingUpPanelLayout
+            xmlns:sothree="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/sliding_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:gravity="bottom"
+            sothree:umanoPanelHeight="50dp"
+            sothree:umanoShadowHeight="4dp">
 
             <include
-                layout="@layout/main_top"
+                layout="@layout/app_bar_drower"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+            <fragment
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:name="naveropenapi.example.com.aduinoproject.DB.FragChat"/>
 
-            <include
-                layout="@layout/main_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1" />
+        </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
-        </LinearLayout>
 
-        <include
-            layout="@layout/login_loading_anime"
-            android:visibility="gone" />
+        <android.support.design.widget.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_drower"
+            app:menu="@menu/activity_drower_drawer" />
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+    <include
+        layout="@layout/login_loading_anime"
+        android:visibility="gone" />
+
+
+
 
 </FrameLayout>
+

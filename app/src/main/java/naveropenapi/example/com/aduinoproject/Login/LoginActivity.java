@@ -2,6 +2,7 @@ package naveropenapi.example.com.aduinoproject.Login;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -95,10 +96,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
+        Log.e(TAG,"on_create");
+        mAuth = FirebaseAuth.getInstance();
         setView();
         defult_login();
         google_Login();
-        mAuth = FirebaseAuth.getInstance();
+        authStateL();
 
 
         googleSingBtn.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +139,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        authStateL();
     }
 
 
@@ -244,6 +246,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                Log.e("리스너테스트","작동중");
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + "sign in");
@@ -260,8 +263,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //구글 연동 메서드
     private void google_Login() {
-//        FirebaseAuth.getInstance().signOut();
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder
                 (GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.google_WebApiKey))
@@ -393,18 +394,28 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        Log.e(TAG,"on_resume");
+        mAuth.removeAuthStateListener(mAuthStateListener);
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
         //로그인 지속 리스너
         //로그인이 활성화 중일때 로그인창 패스
-//        mAuth.addAuthStateListener(mAuthStateListener);
+        Log.e(TAG,"on_start");
+        mAuth.removeAuthStateListener(mAuthStateListener);
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        Log.e(TAG,"on_stop");
         // mAuthStateListener 값이 null이 아닌 경우 재 로그인 행위
         if (mAuthStateListener != null) {
             mAuth.removeAuthStateListener(mAuthStateListener);

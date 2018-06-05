@@ -1,11 +1,9 @@
 <resources>
-    <string name="app_name">AduinoProject</string>
+    <string name="app_name">BlackCube</string>
     <string name="google_WebApiKey">806636567829-c1j6job7r1lqb1sro8vpnimjhtco0okm.apps.googleusercontent.com</string>
     <string name="facebook_app_id">571393386579646</string>
     <string name="fb_login_protocol_scheme"> fb_login_protocol_scheme</string>
     <string name="dial_token">253a2d36e8d2494cb0f3975029fa9e09</string>
-
-
 
 
     <string name="id_S"><u>아이디 찾기</u></string>
@@ -15,4 +13,10 @@
     <string name="login_face">페이스북</string>
     <string name="login_kakao">카카오톡</string>
     <string name="login_naver">네이버</string>
+    <string name="title_activity_drower">DrowerActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">AR 전체모드</string>
 </resources>
