@@ -33,22 +33,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             chat_time = (TextView) itemview.findViewById(R.id.chat_time);
         }
     }
-    //----노멀 내부클래스 종료
 
-    //푸터 뷰 홀더 클래스 설정----
-    public static class FooterViewHolder extends RecyclerView.ViewHolder {
-
-        public FooterViewHolder(View itemview) {
-            super(itemview);
-            itemview.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-        }
-    }
-    //----푸터 내부클래스 종료
 
 
     //생성자

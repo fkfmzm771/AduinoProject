@@ -2,8 +2,6 @@ package naveropenapi.example.com.aduinoproject.DB;
 
 
 import android.content.Context;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +21,6 @@ import ai.api.android.AIService;
 import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
-import naveropenapi.example.com.aduinoproject.R;
 
 import static com.google.android.gms.internal.zzahf.runOnUiThread;
 
@@ -40,7 +37,6 @@ public class DialogFlow implements AIListener {
     private DatabaseReference myRef;
     private FirebaseUser user;
 
-    View view;
 
     private String email;
 
@@ -48,7 +44,6 @@ public class DialogFlow implements AIListener {
     public DialogFlow(Context context) {
         mContext = context;
 
-        view = View.inflate(mContext, R.layout.voice_loading, null);
 
         final AIConfiguration config = new AIConfiguration("253a2d36e8d2494cb0f3975029fa9e09",
                 AIConfiguration.SupportedLanguages.Korean,
@@ -86,16 +81,12 @@ public class DialogFlow implements AIListener {
 
     @Override
     public void onListeningCanceled() {
-
         Toast.makeText(mContext, "리스닝 캔슬", Toast.LENGTH_SHORT).show();
-        view.findViewById(R.id.loadingPage).setVisibility(View.GONE);
     }
 
     @Override
     public void onListeningFinished() {
-
         Toast.makeText(mContext, "리스닝 피니쉬", Toast.LENGTH_SHORT).show();
-        view.findViewById(R.id.loadingPage).setVisibility(View.GONE);
     }
 
     @Override

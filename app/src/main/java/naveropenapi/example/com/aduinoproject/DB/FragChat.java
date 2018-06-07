@@ -53,13 +53,8 @@ public class FragChat extends Fragment {
 
     //파이어캐스트 이메일값
     private String email;
-
     private FirebaseUser user;
 
-
-    public FragChat(){
-
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
