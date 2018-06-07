@@ -9,7 +9,4 @@ public class IdCheck {
         } else
             return true;
     }
-
-
-
 }

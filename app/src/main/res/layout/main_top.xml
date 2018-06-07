@@ -13,5 +13,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <ai.api.ui.AIButton
+        android:id="@+id/micButton"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        style="@style/ApiAi.Microphone"
+        />
+
 
 </LinearLayout>
