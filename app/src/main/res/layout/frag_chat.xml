@@ -70,9 +70,5 @@
     </LinearLayout>
 
 
-    <include
-        layout="@layout/voice_loading"
-        android:visibility="gone" />
-
 
 </FrameLayout>

@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
@@ -77,21 +76,21 @@ public class MainActivity extends AppCompatActivity implements
 
         menuListView.setAdapter(adapter);
 
-//        mEditReceive = (TextView) findViewById(R.id.receiveString);
-//        mEditSend = (EditText) findViewById(R.id.sendString);
-//        mButtonSend = (Button) findViewById(R.id.sendButton);
+        mEditReceive = (TextView) findViewById(R.id.receiveString);
+        mEditSend = (EditText) findViewById(R.id.sendString);
+        mButtonSend = (Button) findViewById(R.id.sendButton);
 
 
         //아두이노 문자 전송
-//        mButtonSend.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // 문자열 전송하는 함수(쓰레드 사용 x)
-//                blueTooth.sendData(mEditSend.getText().toString());
+        mButtonSend.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 문자열 전송하는 함수(쓰레드 사용 x)
+                blueTooth.sendData(mEditSend.getText().toString());
 //                sendData(BtStr);
-//                mEditSend.setText("");
-//            }
-//        });
+                mEditSend.setText("");
+            }
+        });
 
         // 블루투스 활성화 시키는 메소드
         if (blueTooth != null) {
@@ -99,35 +98,31 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         //구글 음성인식 시작
-//
-//        if (googleVoice == null) {
-//            googleVoice = new GoogleVoice(this);
-//        }
-//
-//        findViewById(R.id.voice_in).setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                arDump.clear();
-//                mEditSend.setText("");
-//                startActivityForResult(googleVoice.VoiceBtn(), GoogleVoice.RESULT_SPEECH);
-//            }
-//        });
+
+        if (googleVoice == null) {
+            googleVoice = new GoogleVoice(this);
+        }
+
+        findViewById(R.id.voice_in).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arDump.clear();
+                mEditSend.setText("");
+                startActivityForResult(googleVoice.VoiceBtn(), GoogleVoice.RESULT_SPEECH);
+            }
+        });
 
 
         //네비게이션 드로어 구현
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
-        //플로팅버튼 호출
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SlidingUpPanelLayout slidingUpPanelLayout = findViewById(R.id.sliding_layout);
-                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                D_FLOW.button_Clicked();
-
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
 
@@ -189,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
+
     //네비게이션 드로어 메뉴
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -201,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+
 
 
         } else if (id == R.id.btn_logout) {  //로그아웃 버튼
@@ -220,18 +217,11 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        SlidingUpPanelLayout slidingUpPanelLayout = findViewById(R.id.sliding_layout);
-
-        if ((drawer.isDrawerOpen(GravityCompat.START) || slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED)) {
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
-            } else if (slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
-                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
-            }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
-
         }
     }
 

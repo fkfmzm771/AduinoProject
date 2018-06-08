@@ -3,15 +3,22 @@ package naveropenapi.example.com.aduinoproject.VoiceApi;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hyunungLim on 2018-05-14.
  */
 
-public class GoogleRecognition implements RecognitionListener{
+public class GoogleRecognition implements RecognitionListener {
+    private final String TAG = "gooRec_Check";
+
+
+
     //음성인식 리스너
     @Override
     public void onReadyForSpeech(Bundle params) {
@@ -31,6 +38,7 @@ public class GoogleRecognition implements RecognitionListener{
 
     @Override
     public void onEndOfSpeech() {
+
     }
 
     @Override
@@ -74,6 +82,7 @@ public class GoogleRecognition implements RecognitionListener{
         Log.e("GoogleActivity", "SPEECH ERROR : " + message);
     }
 
+
     @Override
     public void onResults(Bundle results) {
         ArrayList<String> matches = results
@@ -86,10 +95,14 @@ public class GoogleRecognition implements RecognitionListener{
     @Override
     public void onPartialResults(Bundle partialResults) {
 
+
     }
 
     @Override
     public void onEvent(int eventType, Bundle params) {
 
     }
+
+
 }
+
