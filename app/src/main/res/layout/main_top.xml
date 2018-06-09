@@ -3,7 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
     <TextView
@@ -14,7 +13,6 @@
         android:text="AR실행창 클릭시 실행"
         android:textColor="#ffffff"/>
 
-    <include layout="@layout/view_yutube"/>
 
 
 
