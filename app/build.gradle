@@ -55,6 +55,7 @@ dependencies {
     // api.ai SDK dependencies
     implementation 'com.google.code.gson:gson:2.3'
     implementation 'commons-io:commons-io:2.4'
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
 }
 
 

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,6 +52,7 @@ public class FragChat extends Fragment {
     private Context context;
 
 
+
     //파이어캐스트 이메일값
     private String email;
     private FirebaseUser user;
@@ -85,6 +87,7 @@ public class FragChat extends Fragment {
         }
         //chatModel 객체
         mChat = new ArrayList<>();
+
 
         //어댑터에 값 추가
         mAdapter = new MyAdapter(mChat, email);

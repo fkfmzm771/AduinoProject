@@ -38,6 +38,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import naveropenapi.example.com.aduinoproject.DeveloperKey;
 import naveropenapi.example.com.aduinoproject.MainActivity;
 import naveropenapi.example.com.aduinoproject.R;
 import naveropenapi.example.com.aduinoproject.Ui.IdCheck;
@@ -265,7 +266,7 @@ public class LoginActivity extends AppCompatActivity {
     private void google_Login() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder
                 (GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.google_WebApiKey))
+                .requestIdToken(DeveloperKey.GOOGLE_DEVELOPER_KEY)
                 .requestEmail()
                 .build();
         mGoogleApiClient = new GoogleApiClient.Builder(this)

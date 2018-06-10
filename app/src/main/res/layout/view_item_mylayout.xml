@@ -15,8 +15,21 @@
         <LinearLayout
             android:layout_weight="1"
             android:gravity="right"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/chat_time"
+                android:layout_width="35dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="시간"
+                android:textSize="9dp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/chat_comment"
@@ -49,21 +62,12 @@
                 android:layout_height="35dp">
 
                 <ImageView
+                    android:id="@+id/user_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/chat_time"
-                android:layout_width="35dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:background="#a83d61"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="시간"
-                android:textSize="9dp"
-                android:textStyle="bold" />
+
 
         </LinearLayout>
 

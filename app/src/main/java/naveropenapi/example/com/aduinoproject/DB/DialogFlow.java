@@ -21,6 +21,7 @@ import ai.api.android.AIService;
 import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
+import naveropenapi.example.com.aduinoproject.DeveloperKey;
 
 import static com.google.android.gms.internal.zzahf.runOnUiThread;
 
@@ -45,7 +46,7 @@ public class DialogFlow implements AIListener {
         mContext = context;
 
 
-        final AIConfiguration config = new AIConfiguration("253a2d36e8d2494cb0f3975029fa9e09",
+        final AIConfiguration config = new AIConfiguration(DeveloperKey.DIAL_LOGFLOW_KEY,
                 AIConfiguration.SupportedLanguages.Korean,
                 AIConfiguration.RecognitionEngine.System);
 
