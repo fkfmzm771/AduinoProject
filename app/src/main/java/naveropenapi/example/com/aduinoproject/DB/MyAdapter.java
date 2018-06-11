@@ -1,14 +1,9 @@
 package naveropenapi.example.com.aduinoproject.DB;
 
-import android.graphics.drawable.ScaleDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,7 +15,7 @@ import naveropenapi.example.com.aduinoproject.R;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private List<ChatModel> mChat = new ArrayList<>();
-    private String myEmail;
+    private String email;
 
     private final int MISAKI = 1;
     private final int USER = 2;
@@ -44,7 +39,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     //생성자
     public MyAdapter(List<ChatModel> mChat, String email) {
         this.mChat = mChat;
-        this.myEmail = email;
+        this.email = email;
 
     }
 
@@ -53,13 +48,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public int getItemViewType(int position) {
 
         if (position < mChat.size()) {
-            if ((mChat.get(position).getEmail()).equals(myEmail)) {
-                return 1;
+            if ((mChat.get(position).getEmail()).equals(email)) {
+                return USER;
             } else if ((mChat.get(position).getEmail()).equals("MISAKI")) {
-                return 2;
+                return MISAKI;
             }
         }
-        return 3;
+        return FOOTER;
 
 
     }
@@ -71,10 +66,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         if (viewType == MISAKI) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_item_mylayout, parent, false);
+                    .inflate(R.layout.view_item_layout, parent, false);
         } else if (viewType == USER) {
             view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.view_item_layout, parent, false);
+                    .inflate(R.layout.view_item_mylayout, parent, false);
         } else if (viewType == FOOTER) {
             view = LayoutInflater.from(parent.getContext()).
                     inflate(R.layout.view_item_footer, parent, false);
