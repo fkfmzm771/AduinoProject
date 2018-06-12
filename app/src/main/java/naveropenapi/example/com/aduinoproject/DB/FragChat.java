@@ -156,6 +156,9 @@ public class FragChat extends Fragment {
 
                 mAdapter.notifyDataSetChanged();
                 mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
+
+
+
             }
 
             //addChildEventListener 인터페이스들
@@ -192,4 +195,13 @@ public class FragChat extends Fragment {
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if(DialogFlow.tts !=null){
+            DialogFlow.tts.stop();
+            DialogFlow.tts.shutdown();
+        }
+    }
 }

@@ -46,12 +46,6 @@ public class MainCardViewAdapter extends RecyclerView.Adapter<MainCardViewAdapte
                 parent.getContext()).
                 inflate(R.layout.albumview_item, null);
 
-        if (viewType == getItemCount()){
-            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) view.getLayoutParams();
-            layoutParams.setMargins(01,10,10,10);
-            view.setLayoutParams(layoutParams);
-        }
-
         return new ViewHolder(view);
     }
 
@@ -60,8 +54,9 @@ public class MainCardViewAdapter extends RecyclerView.Adapter<MainCardViewAdapte
 
         final MainCardViewItem item = items.get(position);
         Drawable drawable = ContextCompat.getDrawable(mContext, item.getImage());
-        holder.mImageView.setBackground(drawable);
+//        holder.mImageView.setBackground(drawable);
         holder.title.setText(item.getTitleStr());
+        holder.mCardView.setBackground(drawable);
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +87,7 @@ public class MainCardViewAdapter extends RecyclerView.Adapter<MainCardViewAdapte
 
         public ViewHolder(View itemView) {
             super(itemView);
+
             mImageView = (ImageView) itemView.findViewById(R.id.card_imageView1);
             title = (TextView) itemView.findViewById(R.id.card_textView1);
             mCardView = (CardView) itemView.findViewById(R.id.cardview);

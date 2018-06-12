@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements
     //다이얼로그 플로어
     public static DialogFlow D_FLOW;
 
+    public GoogleVoice googleVoice;
+
 
     //view 객체 생성
 
@@ -61,8 +63,8 @@ public class MainActivity extends AppCompatActivity implements
 
         List<MainCardViewItem> items = new ArrayList<>();
         MainCardViewItem[] item = new MainCardViewItem[ITEM_SIZE];
-        item[0] = new MainCardViewItem(R.drawable.menu_image_item1, "#1");
-        item[1] = new MainCardViewItem(R.drawable.menu_image_item2, "#2");
+        item[0] = new MainCardViewItem(R.drawable.menu_power, "#1");
+        item[1] = new MainCardViewItem(R.drawable.menu_color, "#2");
         item[2] = new MainCardViewItem(R.drawable.menu_image_item3, "#3");
         item[3] = new MainCardViewItem(R.drawable.menu_image_item4, "#4");
         item[4] = new MainCardViewItem(R.drawable.menu_image_item5, "#5");
@@ -96,19 +98,19 @@ public class MainActivity extends AppCompatActivity implements
         }
 
         //구글 음성인식 시작
-//
-//        if (googleVoice == null) {
-//            googleVoice = new GoogleVoice(this);
-//        }
-//
-//        findViewById(R.id.voice_in).setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                arDump.clear();
-//                mEditSend.setText("");
-//                startActivityForResult(googleVoice.VoiceBtn(), GoogleVoice.RESULT_SPEECH);
-//            }
-//        });
+
+        if (googleVoice == null) {
+            googleVoice = new GoogleVoice(this);
+        }
+
+        findViewById(R.id.voice_in).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                arDump.clear();
+                mEditSend.setText("");
+                startActivityForResult(googleVoice.VoiceBtn(), GoogleVoice.RESULT_SPEECH);
+            }
+        });
 
 
         //네비게이션 드로어 구현

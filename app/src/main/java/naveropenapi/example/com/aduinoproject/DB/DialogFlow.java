@@ -1,7 +1,10 @@
 package naveropenapi.example.com.aduinoproject.DB;
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
+import android.speech.tts.TextToSpeech;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -12,7 +15,9 @@ import com.google.gson.JsonElement;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Locale;
 import java.util.Map;
 
 import ai.api.AIListener;
@@ -31,6 +36,7 @@ import static com.google.android.gms.internal.zzahf.runOnUiThread;
 
 public class DialogFlow implements AIListener {
 
+
     public AIService aiService;
     private Context mContext;
 
@@ -38,13 +44,22 @@ public class DialogFlow implements AIListener {
     private DatabaseReference myRef;
     private FirebaseUser user;
 
-
+    public static TextToSpeech tts;
     private String email;
 
 
     public DialogFlow(Context context) {
         mContext = context;
 
+        //tts 객체 생성
+        tts=new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    tts.setLanguage(Locale.KOREAN);
+                }
+            }
+        });
 
         final AIConfiguration config = new AIConfiguration(DeveloperKey.DIAL_LOGFLOW_KEY,
                 AIConfiguration.SupportedLanguages.Korean,
@@ -166,9 +181,35 @@ public class DialogFlow implements AIListener {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
 
+                //tts 실행
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    ttsGreater21(result.getFulfillment().getSpeech());
+                } else {
+                    ttsUnder20(result.getFulfillment().getSpeech());
+                }
+
+            }
         });
+
+
+
+    }
+
+
+
+    //tts 처리
+    @SuppressWarnings("deprecation")
+    private void ttsUnder20(String text) {
+        HashMap<String, String> map = new HashMap<>();
+        map.put(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "MessageId");
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, map);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void ttsGreater21(String text) {
+        String utteranceId=this.hashCode() + "";
+        tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
     }
 
 }
