@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +24,16 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import ai.api.model.AIError;
+import ai.api.model.AIResponse;
+import ai.api.ui.AIButton;
 import naveropenapi.example.com.aduinoproject.DB.DialogFlow;
 import naveropenapi.example.com.aduinoproject.Login.LoginActivity;
 import naveropenapi.example.com.aduinoproject.NetWork.C_BlueTooth;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewAdapter;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewItem;
 import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
+import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceService;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -36,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements
 
     //다이얼로그 플로어
     public static DialogFlow D_FLOW;
+    private AIButton mAIButton;
 
     public GoogleVoice googleVoice;
 
@@ -102,17 +108,48 @@ public class MainActivity extends AppCompatActivity implements
         if (googleVoice == null) {
             googleVoice = new GoogleVoice(this);
         }
-
-        findViewById(R.id.voice_in).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                arDump.clear();
-                mEditSend.setText("");
-                startActivityForResult(googleVoice.VoiceBtn(), GoogleVoice.RESULT_SPEECH);
+            public void onClick(View view) {
+                startActivityForResult(googleVoice.voiceBtn(), googleVoice.RESULT_SPEECH);
+            }
+        });
+
+        mAIButton = findViewById(R.id.micButton);
+        mAIButton.initialize(D_FLOW.config);
+
+        mAIButton.setResultsListener(new AIButton.AIButtonListener() {
+            @Override
+            public void onResult(final AIResponse result) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("ApiAi", "onResult");
+                        // TODO process response here
+                    }
+                });
+            }
+
+            @Override
+            public void onError(final AIError error) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("ApiAi", "onError");
+                        // TODO process error here
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled() {
+                
             }
         });
 
 
+
+        
         //네비게이션 드로어 구현
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -159,31 +196,33 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // startActivityForResult 를 여러번 사용할 땐 이런 식으로 switch 문을 사용하여 어떤 요청인지 구분하여 사용함.
-        switch (requestCode) {
-            case C_BlueTooth.REQUEST_ENABLE_BT:
-                if (resultCode == RESULT_OK) { // 블루투스 활성화 상태
-                    blueTooth.selectDevice();
-                } else if (resultCode == RESULT_CANCELED) { // 블루투스 비활성화 상태 (종료)
-                    Toast.makeText(getApplicationContext(), "블루투스를 사용할 수 없어 프로그램을 종료합니다", Toast.LENGTH_LONG).show();
-                    finish();
-                }
-            case GoogleVoice.RESULT_SPEECH:
-                if (resultCode == RESULT_OK && null != data) {
-                    ArrayList<String> text = data
-                            .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+        //블루투스
+        if (requestCode == C_BlueTooth.REQUEST_ENABLE_BT) {
+            if (resultCode == RESULT_OK) { // 블루투스 활성화 상태
+                blueTooth.selectDevice();
+            } else if (resultCode == RESULT_CANCELED) { // 블루투스 비활성화 상태 (종료)
+                Toast.makeText(getApplicationContext(), "블루투스를 사용할 수 없어 프로그램을 종료합니다", Toast.LENGTH_LONG).show();
+                finish();
+            }
 
-                    for (int i = 0; i < text.size(); i++) {
-                        System.out.println("입력 음성 값" + i);
-
-                        //보이스값 전송
-//                        mEditSend.setText(text.get(i));
-                        String BtStr = text.get(i);
-//                        blueTooth.sendData(BtStr);
-                        voice_result = text.get(i);
-                    }
-                }
-                break;
         }
+        //구글 보이스
+        if (requestCode == GoogleVoice.RESULT_SPEECH) {
+            if (resultCode == RESULT_OK && null != data) {
+                ArrayList<String> text = data
+                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+
+                for (int i = 0; i < text.size(); i++) {
+                    System.out.println("입력 음성 값" + i);
+                    if (text.get(i).equals("미사키")){
+                        D_FLOW.button_Clicked();
+                    }
+
+                }
+            }
+        }
+
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -254,6 +293,20 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+
+    @Override
+    protected void onStart() {
+        
+        super.onStart();
+    }
+
+    @Override
+    protected void onPostResume() {
+        Intent intent = new Intent(this, VoiceService.class);
+        startService(intent);
+
+        super.onPostResume();
     }
 }
 

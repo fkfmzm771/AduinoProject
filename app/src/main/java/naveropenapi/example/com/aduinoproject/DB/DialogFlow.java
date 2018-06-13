@@ -45,6 +45,7 @@ public class DialogFlow implements AIListener {
     private FirebaseUser user;
 
     public static TextToSpeech tts;
+    public final AIConfiguration config;
     private String email;
 
 
@@ -61,7 +62,7 @@ public class DialogFlow implements AIListener {
             }
         });
 
-        final AIConfiguration config = new AIConfiguration(DeveloperKey.DIAL_LOGFLOW_KEY,
+        config = new AIConfiguration(DeveloperKey.DIAL_LOGFLOW_KEY,
                 AIConfiguration.SupportedLanguages.Korean,
                 AIConfiguration.RecognitionEngine.System);
 

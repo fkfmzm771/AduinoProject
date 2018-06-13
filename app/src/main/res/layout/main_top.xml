@@ -14,6 +14,17 @@
         android:text="AR실행창 클릭시 실행"
         android:textColor="#ffffff"/>
 
+    <Button
+        android:id="@+id/btn_test"
+        android:text="음성 키워드 테스트"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <ai.api.ui.AIButton
+        android:id="@+id/micButton"
+        style="@style/ApiAi.Microphone"
+        android:layout_width="match_parent"
+        android:layout_height="152dp"/>
+
 
 
 </LinearLayout>

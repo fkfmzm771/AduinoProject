@@ -45,6 +45,7 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".VoiceApi.VoiceService"></service>
 
     </application>
 
