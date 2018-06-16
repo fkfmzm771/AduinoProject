@@ -19,11 +19,6 @@
         android:text="음성 키워드 테스트"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <ai.api.ui.AIButton
-        android:id="@+id/micButton"
-        style="@style/ApiAi.Microphone"
-        android:layout_width="match_parent"
-        android:layout_height="152dp"/>
 
 
 

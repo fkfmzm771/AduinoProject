@@ -33,7 +33,8 @@ import naveropenapi.example.com.aduinoproject.NetWork.C_BlueTooth;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewAdapter;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewItem;
 import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
-import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceService;
+import naveropenapi.example.com.aduinoproject.VoiceApi.TestReceiver;
+import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceRecoService;
 
 
 public class MainActivity extends AppCompatActivity implements
@@ -69,11 +70,11 @@ public class MainActivity extends AppCompatActivity implements
 
         List<MainCardViewItem> items = new ArrayList<>();
         MainCardViewItem[] item = new MainCardViewItem[ITEM_SIZE];
-        item[0] = new MainCardViewItem(R.drawable.menu_power, "#1");
-        item[1] = new MainCardViewItem(R.drawable.menu_color, "#2");
-        item[2] = new MainCardViewItem(R.drawable.menu_image_item3, "#3");
-        item[3] = new MainCardViewItem(R.drawable.menu_image_item4, "#4");
-        item[4] = new MainCardViewItem(R.drawable.menu_image_item5, "#5");
+        item[0] = new MainCardViewItem(R.drawable.m1, "#1");
+        item[1] = new MainCardViewItem(R.drawable.m2, "#2");
+        item[2] = new MainCardViewItem(R.drawable.m1, "#3");
+        item[3] = new MainCardViewItem(R.drawable.m2, "#4");
+        item[4] = new MainCardViewItem(R.drawable.m1, "#5");
 
         for (int i = 0; i < ITEM_SIZE; i++) {
             items.add(item[i]);
@@ -105,47 +106,17 @@ public class MainActivity extends AppCompatActivity implements
 
         //구글 음성인식 시작
 
-        if (googleVoice == null) {
-            googleVoice = new GoogleVoice(this);
-        }
-        findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivityForResult(googleVoice.voiceBtn(), googleVoice.RESULT_SPEECH);
-            }
-        });
+//        if (googleVoice == null) {
+//            googleVoice = new GoogleVoice(this);
+//        }
+//        findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivityForResult(googleVoice.voiceBtn(), googleVoice.RESULT_SPEECH);
+//            }
+//        });
 
-        mAIButton = findViewById(R.id.micButton);
-        mAIButton.initialize(D_FLOW.config);
 
-        mAIButton.setResultsListener(new AIButton.AIButtonListener() {
-            @Override
-            public void onResult(final AIResponse result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("ApiAi", "onResult");
-                        // TODO process response here
-                    }
-                });
-            }
-
-            @Override
-            public void onError(final AIError error) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Log.d("ApiAi", "onError");
-                        // TODO process error here
-                    }
-                });
-            }
-
-            @Override
-            public void onCancelled() {
-                
-            }
-        });
 
 
 
@@ -189,7 +160,13 @@ public class MainActivity extends AppCompatActivity implements
             blueTooth.mSocket.close();
         } catch (Exception e) {
         }
+
+        Intent intent = new Intent(getApplicationContext(), VoiceRecoService.class);
+        stopService(intent);
+
         super.onDestroy();
+
+
     }
 
 
@@ -297,16 +274,19 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
-        
+        startService(new Intent(this,VoiceRecoService.class));
         super.onStart();
     }
 
     @Override
     protected void onPostResume() {
-        Intent intent = new Intent(this, VoiceService.class);
-        startService(intent);
-
         super.onPostResume();
+    }
+
+    @Override
+    protected void onStop() {
+
+        super.onStop();
     }
 }
 

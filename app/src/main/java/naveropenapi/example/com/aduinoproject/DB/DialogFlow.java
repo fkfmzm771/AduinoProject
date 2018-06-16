@@ -5,6 +5,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,6 +36,8 @@ import static com.google.android.gms.internal.zzahf.runOnUiThread;
  */
 
 public class DialogFlow implements AIListener {
+
+    private static final String TAG = "TestReceiver 시험중";
 
 
     public AIService aiService;
@@ -75,6 +78,7 @@ public class DialogFlow implements AIListener {
     }
 
     public void button_Clicked() {
+        Log.e(TAG, "플로어 시작" );
         aiService.startListening();
 
     }

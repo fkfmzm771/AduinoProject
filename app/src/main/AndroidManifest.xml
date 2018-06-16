@@ -45,8 +45,14 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".VoiceApi.VoiceService"></service>
+        <receiver android:name=".VoiceApi.TestReceiver">
 
+            <intent-filter> <action android:name="com.aduinoproject.example.INTENT_ACTION_VOICE_RECO"/> </intent-filter>
+
+
+        </receiver>
+
+        <service android:name=".VoiceApi.VoiceRecoService"/>
     </application>
 
 </manifest>

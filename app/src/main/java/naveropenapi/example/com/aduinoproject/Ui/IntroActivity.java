@@ -6,9 +6,6 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
 import naveropenapi.example.com.aduinoproject.Login.LoginActivity;
 import naveropenapi.example.com.aduinoproject.R;
 
