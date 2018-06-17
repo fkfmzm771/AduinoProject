@@ -1,40 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center_vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginBottom="5dp"
-            android:layout_gravity="bottom"
-            android:src="@drawable/unitychan"
-            app:civ_border_color="#d1d180"
-            app:civ_border_width="1dp"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="top"
+                android:src="@drawable/unitychan"
+                app:civ_border_color="#d1d180"
+                app:civ_border_width="1dp"/>
+
+            <TextView
+                android:id="@+id/chat_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="시간"
+                android:textSize="9dp"
+                android:textStyle="bold"/>
+        </LinearLayout>
 
 
         <TextView
             android:id="@+id/chat_comment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/back_misaki"
-            android:gravity="center_vertical"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -43,21 +58,7 @@
             android:textColor="#ffffff"
             android:textSize="15dp"/>
 
-        <TextView
-            android:id="@+id/chat_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="left"
-            android:includeFontPadding="false"
-            android:text="시간"
-            android:textSize="9dp"
-            android:textStyle="bold"/>
-
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"/>
 </LinearLayout>

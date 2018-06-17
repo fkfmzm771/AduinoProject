@@ -12,6 +12,7 @@ import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -26,6 +27,8 @@ public class VoiceRecoService extends Service {
     final private int MSG_VOICE_RECO_END = 1002;
     final private int MSG_VOICE_RECO_RESTART = 1003;
 
+    private Context mContext;
+
 
     @Nullable
     @Override
@@ -36,8 +39,14 @@ public class VoiceRecoService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-//        AudioManager amanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-//        amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        Log.e("핸들러 시험", "서비스 실행");
+        mContext = getApplicationContext();
+        AudioManager amanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
+        amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
+        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+        amanager.setStreamMute(AudioManager.STREAM_RING, false);
+        amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
         startListening();
     }
 
@@ -55,6 +64,7 @@ public class VoiceRecoService extends Service {
                 }
                 case MSG_VOICE_RECO_RESTART:
                     startListening();
+                    Log.e("핸들러 시험", "리스타트");
 
                     break;
                 default:
@@ -67,10 +77,10 @@ public class VoiceRecoService extends Service {
 
         if (mBoolVoiceRecoStarted == false) {
             if (mSrRecognizer == null) {
-                mSrRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
+                mSrRecognizer = SpeechRecognizer.createSpeechRecognizer(mContext);
                 mSrRecognizer.setRecognitionListener(mClsRecoListener);
             }
-            if (mSrRecognizer.isRecognitionAvailable(getApplicationContext())) {
+            if (mSrRecognizer.isRecognitionAvailable(mContext)) {
                 Intent itItent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
                 itItent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
                 itItent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.KOREAN.toString());
@@ -106,7 +116,7 @@ public class VoiceRecoService extends Service {
             Intent itBroadcast = new Intent();
             itBroadcast.setAction("com.aduinoproject.example.INTENT_ACTION_VOICE_RECO");
             itBroadcast.putExtras(results);
-            getApplicationContext().sendBroadcast(itBroadcast);
+            mContext.sendBroadcast(itBroadcast);
         }
 
         @Override

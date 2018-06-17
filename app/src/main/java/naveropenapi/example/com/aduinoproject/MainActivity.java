@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,16 +23,12 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import ai.api.model.AIError;
-import ai.api.model.AIResponse;
-import ai.api.ui.AIButton;
-import naveropenapi.example.com.aduinoproject.DB.DialogFlow;
+import naveropenapi.example.com.aduinoproject.DB.FragChat;
 import naveropenapi.example.com.aduinoproject.Login.LoginActivity;
 import naveropenapi.example.com.aduinoproject.NetWork.C_BlueTooth;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewAdapter;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewItem;
 import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
-import naveropenapi.example.com.aduinoproject.VoiceApi.TestReceiver;
 import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceRecoService;
 
 
@@ -41,8 +36,6 @@ public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     //다이얼로그 플로어
-    public static DialogFlow D_FLOW;
-    private AIButton mAIButton;
 
     public GoogleVoice googleVoice;
 
@@ -60,8 +53,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(getApplicationContext(), VoiceRecoService.class);
+        startService(intent);
+
         //다이얼로그 플로어 객체 생성
-        D_FLOW = new DialogFlow(getApplicationContext());
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.menu_list);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -133,7 +128,6 @@ public class MainActivity extends AppCompatActivity implements
             public void onClick(View view) {
                 SlidingUpPanelLayout slidingUpPanelLayout = findViewById(R.id.sliding_layout);
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                D_FLOW.button_Clicked();
 
             }
         });
@@ -150,8 +144,6 @@ public class MainActivity extends AppCompatActivity implements
     }
 
 
-    // onDestroy() : 어플이 종료될때 호출 되는 함수.
-    //               블루투스 연결이 필요하지 않는 경우 입출력 스트림 소켓을 닫아줌.
     @Override
     protected void onDestroy() {
         try {
@@ -192,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements
                 for (int i = 0; i < text.size(); i++) {
                     System.out.println("입력 음성 값" + i);
                     if (text.get(i).equals("미사키")){
-                        D_FLOW.button_Clicked();
+                        FragChat.mDialogFlow.button_Clicked();
                     }
 
                 }
@@ -274,7 +266,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
-        startService(new Intent(this,VoiceRecoService.class));
         super.onStart();
     }
 
@@ -287,6 +278,12 @@ public class MainActivity extends AppCompatActivity implements
     protected void onStop() {
 
         super.onStop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }
 

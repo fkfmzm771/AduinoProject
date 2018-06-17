@@ -1,6 +1,7 @@
 package naveropenapi.example.com.aduinoproject.DB;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,15 +55,17 @@ public class FragChat extends Fragment {
     private Context context;
 
 
-
     //파이어캐스트 이메일값
     private String email;
     private FirebaseUser user;
+
+    public static DialogFlow mDialogFlow;
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mDialogFlow = new DialogFlow(getContext());
     }
 
     @Nullable
@@ -68,6 +73,7 @@ public class FragChat extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         context = getContext();
+
 
         //파이어캐스트 데이터 베이스
         database = FirebaseDatabase.getInstance();
@@ -142,7 +148,8 @@ public class FragChat extends Fragment {
         btn_voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.D_FLOW.button_Clicked();
+                mDialogFlow.button_Clicked();
+
             }
         });
 
@@ -156,7 +163,6 @@ public class FragChat extends Fragment {
 
                 mAdapter.notifyDataSetChanged();
                 mRecyclerView.scrollToPosition(mAdapter.getItemCount() - 1);
-
 
 
             }
@@ -199,7 +205,7 @@ public class FragChat extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(DialogFlow.tts !=null){
+        if (DialogFlow.tts != null) {
             DialogFlow.tts.stop();
             DialogFlow.tts.shutdown();
         }

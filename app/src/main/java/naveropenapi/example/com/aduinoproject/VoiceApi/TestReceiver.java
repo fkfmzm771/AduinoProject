@@ -9,7 +9,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import naveropenapi.example.com.aduinoproject.MainActivity;
+import naveropenapi.example.com.aduinoproject.DB.FragChat;
 
 public class TestReceiver extends BroadcastReceiver {
 
@@ -35,8 +35,7 @@ public class TestReceiver extends BroadcastReceiver {
             Log.e(TAG, "onResults text : " + matches.get(i));
             if (matches.get(i).equals("미사키 안녕")) {
                 Log.e(TAG, "onResults text : " + "네 주인님");
-                VoiceRecoService voice = voice.mHdrVoiceRecoState.removeMessages(0);
-                MainActivity.D_FLOW.button_Clicked();
+                FragChat.mDialogFlow.button_Clicked();
             }
 
         }

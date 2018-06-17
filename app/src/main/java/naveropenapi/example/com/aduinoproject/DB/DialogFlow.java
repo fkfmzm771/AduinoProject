@@ -56,10 +56,10 @@ public class DialogFlow implements AIListener {
         mContext = context;
 
         //tts 객체 생성
-        tts=new TextToSpeech(context, new TextToSpeech.OnInitListener() {
+        tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
+                if (status != TextToSpeech.ERROR) {
                     tts.setLanguage(Locale.KOREAN);
                 }
             }
@@ -78,7 +78,7 @@ public class DialogFlow implements AIListener {
     }
 
     public void button_Clicked() {
-        Log.e(TAG, "플로어 시작" );
+        Log.e(TAG, "플로어 시작");
         aiService.startListening();
 
     }
@@ -198,9 +198,7 @@ public class DialogFlow implements AIListener {
         });
 
 
-
     }
-
 
 
     //tts 처리
@@ -213,7 +211,7 @@ public class DialogFlow implements AIListener {
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     private void ttsGreater21(String text) {
-        String utteranceId=this.hashCode() + "";
+        String utteranceId = this.hashCode() + "";
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, null, utteranceId);
     }
 
