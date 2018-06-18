@@ -4,10 +4,12 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.os.Vibrator;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -15,6 +17,8 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.util.Locale;
+
+import naveropenapi.example.com.aduinoproject.R;
 
 
 public class VoiceRecoService extends Service {
@@ -41,15 +45,24 @@ public class VoiceRecoService extends Service {
         super.onCreate();
         Log.e("핸들러 시험", "서비스 실행");
         mContext = getApplicationContext();
-        AudioManager amanager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
-        amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
-        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
-        amanager.setStreamMute(AudioManager.STREAM_RING, false);
-        amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
+//        AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0,  AudioManager.FLAG_SHOW_UI);
+//        mAudioManager.setStreamSolo(AudioManager.STREAM_VOICE_CALL, true);
+//        amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
+//        amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
+//        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
+//        amanager.setStreamMute(AudioManager.STREAM_RING, false);
+//        amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
+//        config.setRecognizerStartSound(getResources().openRawResourceFd(R.raw.test_start));
+//        config.setRecognizerStopSound(getResources().openRawResourceFd(R.raw.test_stop));
+//        config.setRecognizerCancelSound(getResources().openRawResourceFd(R.raw.test_cancel));
         startListening();
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
 
     public Handler mHdrVoiceRecoState = new Handler() {
         @Override
@@ -73,6 +86,7 @@ public class VoiceRecoService extends Service {
         }
     };
 
+
     public void startListening() {
 
         if (mBoolVoiceRecoStarted == false) {
@@ -81,11 +95,14 @@ public class VoiceRecoService extends Service {
                 mSrRecognizer.setRecognitionListener(mClsRecoListener);
             }
             if (mSrRecognizer.isRecognitionAvailable(mContext)) {
-                Intent itItent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                itItent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, this.getPackageName());
-                itItent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.KOREAN.toString());
-                itItent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);
-                mSrRecognizer.startListening(itItent);
+                Intent recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_PREFERENCE, "ko-KR"); //언어지정입니다.
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, mContext.getPackageName());
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);   //검색을 말한 결과를 보여주는 갯수
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 7000);   //검색을 말한 결과를 보여주는 갯수
+                mSrRecognizer.startListening(recognizerIntent);
             }
         }
         mBoolVoiceRecoStarted = true;
@@ -121,6 +138,8 @@ public class VoiceRecoService extends Service {
 
         @Override
         public void onReadyForSpeech(Bundle params) {
+            Log.d("SpeechRecognizer", "Ready");
+
         }
 
         @Override

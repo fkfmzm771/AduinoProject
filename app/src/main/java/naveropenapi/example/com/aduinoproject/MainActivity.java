@@ -29,6 +29,7 @@ import naveropenapi.example.com.aduinoproject.NetWork.C_BlueTooth;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewAdapter;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewItem;
 import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
+import naveropenapi.example.com.aduinoproject.VoiceApi.MyService;
 import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceRecoService;
 
 
@@ -53,8 +54,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(getApplicationContext(), VoiceRecoService.class);
-        startService(intent);
+
 
         //다이얼로그 플로어 객체 생성
 
@@ -266,6 +266,8 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
+//        startService(new Intent(MainActivity.this,VoiceRecoService.class));
+        startService(new Intent(MainActivity.this,MyService.class));
         super.onStart();
     }
 
@@ -285,5 +287,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onResume();
 
     }
+
+
 }
 

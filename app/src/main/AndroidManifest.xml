@@ -50,8 +50,9 @@
                 <action android:name="com.aduinoproject.example.INTENT_ACTION_VOICE_RECO"/>
             </intent-filter>
         </receiver>
-
         <service android:name=".VoiceApi.VoiceRecoService"/>
+        <service android:name=".VoiceApi.MyService"/>
+
     </application>
 
 </manifest>
