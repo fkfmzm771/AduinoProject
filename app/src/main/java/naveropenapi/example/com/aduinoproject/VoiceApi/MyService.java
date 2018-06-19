@@ -61,6 +61,7 @@ public class MyService extends Service {
             switch (msg.what) {
                 case MSG_RECOGNIZER_START_LISTENING:
 
+                    //현재 빌드를 가져와 비교 > 젤리빈
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                         // turn off beep sound
                         if (!mIsStreamSolo) {

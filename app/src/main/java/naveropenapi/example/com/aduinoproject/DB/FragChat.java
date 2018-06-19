@@ -48,8 +48,8 @@ public class FragChat extends Fragment {
     private EditText editText;
     private Button btn_main, btn_voice;
 
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
+    private FirebaseDatabase database = null;
+    private DatabaseReference myRef = null;
 
     private List<ChatModel> mChat;
     private Context context;

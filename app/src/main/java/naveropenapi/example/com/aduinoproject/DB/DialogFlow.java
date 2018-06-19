@@ -3,6 +3,8 @@ package naveropenapi.example.com.aduinoproject.DB;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -28,6 +30,7 @@ import ai.api.model.AIError;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 import naveropenapi.example.com.aduinoproject.DeveloperKey;
+import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceRecoService;
 
 import static com.google.android.gms.internal.zzahf.runOnUiThread;
 
@@ -38,6 +41,8 @@ import static com.google.android.gms.internal.zzahf.runOnUiThread;
 public class DialogFlow implements AIListener {
 
     private static final String TAG = "TestReceiver 시험중";
+
+    private AudioManager mAudioManager;
 
 
     public AIService aiService;
@@ -54,6 +59,7 @@ public class DialogFlow implements AIListener {
 
     public DialogFlow(Context context) {
         mContext = context;
+        mAudioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
 
         //tts 객체 생성
         tts = new TextToSpeech(context, new TextToSpeech.OnInitListener() {
@@ -79,6 +85,7 @@ public class DialogFlow implements AIListener {
 
     public void button_Clicked() {
         Log.e(TAG, "플로어 시작");
+
         aiService.startListening();
 
     }
@@ -102,16 +109,23 @@ public class DialogFlow implements AIListener {
 
     @Override
     public void onListeningCanceled() {
+//        Intent intent = new Intent(mContext, VoiceRecoService.class);
+//        mContext.startService(intent);
         Toast.makeText(mContext, "리스닝 캔슬", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onListeningFinished() {
+//        Intent intent = new Intent(mContext, VoiceRecoService.class);
+//        mContext.startService(intent);
         Toast.makeText(mContext, "리스닝 피니쉬", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResult(final AIResponse response) {
+
+
+        mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
 
         runOnUiThread(new Runnable() {
             @Override

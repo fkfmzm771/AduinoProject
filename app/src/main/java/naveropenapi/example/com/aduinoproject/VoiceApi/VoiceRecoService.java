@@ -4,27 +4,23 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
-import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.os.Vibrator;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import java.util.Locale;
-
-import naveropenapi.example.com.aduinoproject.R;
-
 
 public class VoiceRecoService extends Service {
     boolean mBoolVoiceRecoStarted = false;
 
     private SpeechRecognizer mSrRecognizer;
+
+    private AudioManager mAudioManager;
 
 
     final private int MSG_VOICE_RECO_READY = 1001;
@@ -45,17 +41,14 @@ public class VoiceRecoService extends Service {
         super.onCreate();
         Log.e("핸들러 시험", "서비스 실행");
         mContext = getApplicationContext();
-//        AudioManager mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+//        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
 //        mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0,  AudioManager.FLAG_SHOW_UI);
 //        mAudioManager.setStreamSolo(AudioManager.STREAM_VOICE_CALL, true);
 //        amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, false);
 //        amanager.setStreamMute(AudioManager.STREAM_ALARM, false);
-//        amanager.setStreamMute(AudioManager.STREAM_MUSIC, false);
 //        amanager.setStreamMute(AudioManager.STREAM_RING, false);
 //        amanager.setStreamMute(AudioManager.STREAM_SYSTEM, false);
-//        config.setRecognizerStartSound(getResources().openRawResourceFd(R.raw.test_start));
-//        config.setRecognizerStopSound(getResources().openRawResourceFd(R.raw.test_stop));
-//        config.setRecognizerCancelSound(getResources().openRawResourceFd(R.raw.test_cancel));
         startListening();
     }
 
@@ -100,9 +93,12 @@ public class VoiceRecoService extends Service {
                 recognizerIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, mContext.getPackageName());
                 recognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
                 recognizerIntent.putExtra(RecognizerIntent.EXTRA_PARTIAL_RESULTS, true);
-                recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 20);   //검색을 말한 결과를 보여주는 갯수
+                recognizerIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 5);   //검색을 말한 결과를 보여주는 갯수
                 recognizerIntent.putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 7000);   //검색을 말한 결과를 보여주는 갯수
+
+//                mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
                 mSrRecognizer.startListening(recognizerIntent);
+//                mAudioManager.setStreamMute(AudioManager.STREAM_MUSIC, false);
             }
         }
         mBoolVoiceRecoStarted = true;
@@ -128,6 +124,7 @@ public class VoiceRecoService extends Service {
 
         @Override
         public void onResults(Bundle results) {
+
             mHdrVoiceRecoState.sendEmptyMessage(MSG_VOICE_RECO_END);
 
             Intent itBroadcast = new Intent();
@@ -167,4 +164,6 @@ public class VoiceRecoService extends Service {
         public void onPartialResults(Bundle partialResults) {
         }
     };
+
+
 }

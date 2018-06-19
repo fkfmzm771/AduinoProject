@@ -29,7 +29,6 @@ import naveropenapi.example.com.aduinoproject.NetWork.C_BlueTooth;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewAdapter;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewItem;
 import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
-import naveropenapi.example.com.aduinoproject.VoiceApi.MyService;
 import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceRecoService;
 
 
@@ -53,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
 
         //다이얼로그 플로어 객체 생성
@@ -99,23 +97,8 @@ public class MainActivity extends AppCompatActivity implements
             blueTooth = new C_BlueTooth(this);
         }
 
-        //구글 음성인식 시작
-
-//        if (googleVoice == null) {
-//            googleVoice = new GoogleVoice(this);
-//        }
-//        findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivityForResult(googleVoice.voiceBtn(), googleVoice.RESULT_SPEECH);
-//            }
-//        });
 
 
-
-
-
-        
         //네비게이션 드로어 구현
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -183,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements
 
                 for (int i = 0; i < text.size(); i++) {
                     System.out.println("입력 음성 값" + i);
-                    if (text.get(i).equals("미사키")){
+                    if (text.get(i).equals("미사키")) {
                         FragChat.mDialogFlow.button_Clicked();
                     }
 
@@ -266,8 +249,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
-//        startService(new Intent(MainActivity.this,VoiceRecoService.class));
-        startService(new Intent(MainActivity.this,MyService.class));
+        startService(new Intent(MainActivity.this, VoiceRecoService.class));
         super.onStart();
     }
 
