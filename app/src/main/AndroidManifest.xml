@@ -45,6 +45,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".Memo.MemoActivity"/>
+
         <receiver android:name=".VoiceApi.TestReceiver">
             <intent-filter>
                 <action android:name="com.aduinoproject.example.INTENT_ACTION_VOICE_RECO"/>

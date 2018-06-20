@@ -35,7 +35,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
 
-
     //생성자
     public MyAdapter(List<ChatModel> mChat, String email) {
         this.mChat = mChat;
@@ -86,10 +85,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             holder.chat_time.setText(mChat.get(position).getTime());
         }
 
+
     }
+
 
     @Override
     public int getItemCount() {
         return mChat.size() + 1;
     }
+
 }

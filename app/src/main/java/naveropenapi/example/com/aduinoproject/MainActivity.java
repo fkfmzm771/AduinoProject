@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity implements
             items.add(item[i]);
         }
 
-        recyclerView.setAdapter(new MainCardViewAdapter(getApplicationContext(), items, R.layout.activity_main));
+        recyclerView.setAdapter(new MainCardViewAdapter(MainActivity.this, items, R.layout.activity_main));
+
 
 
 //        mEditReceive = (TextView) findViewById(R.id.receiveString);
@@ -249,7 +250,12 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
+<<<<<<< HEAD
         startService(new Intent(MainActivity.this, VoiceRecoService.class));
+=======
+//        startService(new Intent(MainActivity.this,VoiceRecoService.class));
+//        startService(new Intent(MainActivity.this,MyService.class));
+>>>>>>> 보이스 알림음;23
         super.onStart();
     }
 

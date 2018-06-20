@@ -1,6 +1,7 @@
 package naveropenapi.example.com.aduinoproject.Ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import naveropenapi.example.com.aduinoproject.Memo.MemoActivity;
 import naveropenapi.example.com.aduinoproject.R;
 
 /**
@@ -50,7 +53,7 @@ public class MainCardViewAdapter extends RecyclerView.Adapter<MainCardViewAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
 
         final MainCardViewItem item = items.get(position);
         Drawable drawable = ContextCompat.getDrawable(mContext, item.getImage());
@@ -61,6 +64,15 @@ public class MainCardViewAdapter extends RecyclerView.Adapter<MainCardViewAdapte
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, item.getTitleStr(), Toast.LENGTH_SHORT).show();
+
+                switch (position){
+                    case 3:
+                        Intent intent = new Intent(mContext, MemoActivity.class);
+                        mContext.startActivity(intent);
+                        Log.e("리사이클", "인텐트" );
+                        break;
+
+                }
             }
         });
 
