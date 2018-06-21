@@ -16,6 +16,8 @@ android {
         jcenter()
         //로딩 애니메이션
         maven { url "https://jitpack.io" }
+        google()
+        mavenCentral()
 
     }
 
@@ -44,9 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:11.2.0'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     implementation 'com.android.support:multidex:1.0.1'
-    repositories {
-        mavenCentral()
-    }
+
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.github.bumptech.glide:glide:3.7.0'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
@@ -60,6 +60,9 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     //로딩 애니메이션
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
+
+
+
 }
 
 

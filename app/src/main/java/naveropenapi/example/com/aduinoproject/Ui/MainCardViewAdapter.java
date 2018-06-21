@@ -3,9 +3,7 @@ package naveropenapi.example.com.aduinoproject.Ui;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -14,14 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import naveropenapi.example.com.aduinoproject.Memo.MemoActivity;
+import naveropenapi.example.com.aduinoproject.MainMenuItem.Memo.MemoActivity;
 import naveropenapi.example.com.aduinoproject.R;
 
 /**

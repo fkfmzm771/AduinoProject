@@ -4,26 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back_login"
     tools:context="naveropenapi.example.com.aduinoproject.Login.LoginActivity">
 
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include
-            android:id="@+id/main_top"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            layout="@layout/login_main_top"/>
+        <!--<include-->
+            <!--android:id="@+id/main_top"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--layout="@layout/login_main_top"/>-->
         <include
             android:id="@+id/main_bottom"
-            android:layout_below="@id/main_top"
+            android:layout_gravity="bottom"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             layout="@layout/login_main_bottom"/>
 
-    </RelativeLayout>
+
 
     <include
         android:id="@+id/login_loading_anime"

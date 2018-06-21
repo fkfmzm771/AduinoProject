@@ -153,7 +153,9 @@ public class FragChat extends Fragment {
             }
         });
 
-        myRef = database.getReference("MemberToken").child(user.getUid()).child("ChatBot");
+        if (myRef == null) {
+            myRef = database.getReference("MemberToken").child(user.getUid()).child("ChatBot");
+        }
         myRef.addChildEventListener(new ChildEventListener() {
             //자식값이 추가될때 실행되는 메소드
             @Override

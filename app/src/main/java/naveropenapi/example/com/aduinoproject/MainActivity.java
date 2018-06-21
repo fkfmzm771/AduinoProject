@@ -2,7 +2,6 @@ package naveropenapi.example.com.aduinoproject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,9 +22,9 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import naveropenapi.example.com.aduinoproject.DB.FragChat;
 import naveropenapi.example.com.aduinoproject.Login.LoginActivity;
 import naveropenapi.example.com.aduinoproject.NetWork.C_BlueTooth;
+import naveropenapi.example.com.aduinoproject.Ui.BackPressCloseHandler;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewAdapter;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewItem;
 import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
@@ -45,13 +44,19 @@ public class MainActivity extends AppCompatActivity implements
     private C_BlueTooth blueTooth;
 
     private static String voice_result = "";
-    final int ITEM_SIZE = 5;
+    final int ITEM_SIZE = 4;
+
+    //백 프레스
+    BackPressCloseHandler backPressCloseHandler;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
 
         //다이얼로그 플로어 객체 생성
@@ -63,11 +68,10 @@ public class MainActivity extends AppCompatActivity implements
 
         List<MainCardViewItem> items = new ArrayList<>();
         MainCardViewItem[] item = new MainCardViewItem[ITEM_SIZE];
-        item[0] = new MainCardViewItem(R.drawable.m1, "#1");
-        item[1] = new MainCardViewItem(R.drawable.m2, "#2");
-        item[2] = new MainCardViewItem(R.drawable.m1, "#3");
-        item[3] = new MainCardViewItem(R.drawable.m2, "#4");
-        item[4] = new MainCardViewItem(R.drawable.m1, "#5");
+        item[0] = new MainCardViewItem(R.drawable.menu_color, "");
+        item[1] = new MainCardViewItem(R.drawable.menu_sound, "");
+        item[2] = new MainCardViewItem(R.drawable.menu_command, "");
+        item[3] = new MainCardViewItem(R.drawable.menu_memo, "");
 
         for (int i = 0; i < ITEM_SIZE; i++) {
             items.add(item[i]);
@@ -159,21 +163,7 @@ public class MainActivity extends AppCompatActivity implements
             }
 
         }
-        //구글 보이스
-        if (requestCode == GoogleVoice.RESULT_SPEECH) {
-            if (resultCode == RESULT_OK && null != data) {
-                ArrayList<String> text = data
-                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-                for (int i = 0; i < text.size(); i++) {
-                    System.out.println("입력 음성 값" + i);
-                    if (text.get(i).equals("미사키")) {
-                        FragChat.mDialogFlow.button_Clicked();
-                    }
-
-                }
-            }
-        }
 
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -221,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
             }
         } else {
-            super.onBackPressed();
+            backPressCloseHandler.onBackPressed();
 
         }
     }
@@ -250,12 +240,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
-<<<<<<< HEAD
-        startService(new Intent(MainActivity.this, VoiceRecoService.class));
-=======
+//        startService(new Intent(MainActivity.this, VoiceRecoService.class));
 //        startService(new Intent(MainActivity.this,VoiceRecoService.class));
 //        startService(new Intent(MainActivity.this,MyService.class));
->>>>>>> 보이스 알림음;23
         super.onStart();
     }
 

@@ -1,6 +1,7 @@
 package naveropenapi.example.com.aduinoproject.Login;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -11,10 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -46,8 +49,8 @@ import naveropenapi.example.com.aduinoproject.Ui.IdCheck;
 public class LoginActivity extends AppCompatActivity {
     final static String TAG = "MainActivityTag";
 
-    private Button btn_Login;
-    private Button btn_Register;
+//    private Button btn_Login;
+//    private Button btn_Register;
     private EditText etEmail;
     private EditText etPassword;
     private ProgressBar pb;
@@ -83,8 +86,8 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = (EditText) findViewById(R.id.et_email);
         etPassword = (EditText) findViewById(R.id.et_password);
         anime_layout = (LinearLayout) findViewById(R.id.login_loading_anime);
-        btn_Login = (Button) findViewById(R.id.btn_login);
-        btn_Register = (Button) findViewById(R.id.btn_register);
+//        btn_Login = (Button) findViewById(R.id.btn_login);
+//        btn_Register = (Button) findViewById(R.id.btn_register);
         pb = (ProgressBar) findViewById(R.id.progress_main);
 
         googleSingBtn = (Button) findViewById(R.id.googleSignBtn);
@@ -97,10 +100,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
 
+
         Log.e(TAG,"on_create");
         mAuth = FirebaseAuth.getInstance();
         setView();
-        defult_login();
+//        defult_login();
         google_Login();
         authStateL();
 
@@ -143,104 +147,104 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    //기본 로그인 회원 가입 리스너 처리
-    private void defult_login() {
-        //로그인 버튼 리스너
-
-        btn_Login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IdCheck check = new IdCheck();
-                stEmail = etEmail.getText().toString();
-                stPassword = etPassword.getText().toString();
-                if (check.idCheck(stEmail, stPassword) == false) {
-                    Snackbar.make(getWindow().getDecorView().getRootView(),
-                            "아이디와 패스워드에 공백을 사용할 수 없습니다.", Snackbar.LENGTH_SHORT).show();
-                } else {
-                    loginUser(stEmail, stPassword);
-                }
-            }
-        });
-
-        //회원 가입 버튼 리스너
-
-        btn_Register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                IdCheck check = new IdCheck();
-                stEmail = etEmail.getText().toString();
-                stPassword = etPassword.getText().toString();
-                if (check.idCheck(stEmail, stPassword) == false) {
-                    Snackbar.make(v,
-                            "아이디와 패스워드에 공백을 사용할 수 없습니다.", Snackbar.LENGTH_SHORT).show();
-                } else {
-                    registerUser(stEmail, stPassword);
-                }
-            }
-        });
-    }
-
-
-    //회원 가입 메소드
-    private void registerUser(String email, String password) {
-        anime_layout.setVisibility(View.VISIBLE);
-        pb.setVisibility(View.VISIBLE);
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "createUserWithEmail:success");
-                            Snackbar.make(getCurrentFocus(), "가입이 완료 되었습니다.",
-                                    Snackbar.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Snackbar.make(getCurrentFocus(), "입력값을 확인해 주세요.",
-                                    Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
-                            anime_layout.setVisibility(View.GONE);
-                            pb.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
-    }
-
-    //로그인 메소드
-    private void loginUser(String email, String password) {
-        pb.setVisibility(View.VISIBLE);
-        anime_layout.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
-                            Snackbar.make(getCurrentFocus(), "로그인 되었습니다.",
-                                    Snackbar.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-
-                            pb.setVisibility(View.INVISIBLE);
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            finish();
-
-                        } else {
-                            pb.setVisibility(View.INVISIBLE);
-                            anime_layout.setVisibility(View.GONE);
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Snackbar.make(getCurrentFocus(), "입력값을 다시 확인하세요",
-                                    Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-    }
-
+//    //기본 로그인 회원 가입 리스너 처리
+//    private void defult_login() {
+//        //로그인 버튼 리스너
+//
+//        btn_Login.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                IdCheck check = new IdCheck();
+//                stEmail = etEmail.getText().toString();
+//                stPassword = etPassword.getText().toString();
+//                if (check.idCheck(stEmail, stPassword) == false) {
+//                    Snackbar.make(getWindow().getDecorView().getRootView(),
+//                            "아이디와 패스워드에 공백을 사용할 수 없습니다.", Snackbar.LENGTH_SHORT).show();
+//                } else {
+//                    loginUser(stEmail, stPassword);
+//                }
+//            }
+//        });
+//
+//        //회원 가입 버튼 리스너
+//
+//        btn_Register.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                IdCheck check = new IdCheck();
+//                stEmail = etEmail.getText().toString();
+//                stPassword = etPassword.getText().toString();
+//                if (check.idCheck(stEmail, stPassword) == false) {
+//                    Snackbar.make(v,
+//                            "아이디와 패스워드에 공백을 사용할 수 없습니다.", Snackbar.LENGTH_SHORT).show();
+//                } else {
+//                    registerUser(stEmail, stPassword);
+//                }
+//            }
+//        });
+//    }
+//
+//
+//    //회원 가입 메소드
+//    private void registerUser(String email, String password) {
+//        anime_layout.setVisibility(View.VISIBLE);
+//        pb.setVisibility(View.VISIBLE);
+//        mAuth.createUserWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            Log.d(TAG, "createUserWithEmail:success");
+//                            Snackbar.make(getCurrentFocus(), "가입이 완료 되었습니다.",
+//                                    Snackbar.LENGTH_SHORT).show();
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                            updateUI(user);
+//                        } else {
+//                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
+//                            Snackbar.make(getCurrentFocus(), "입력값을 확인해 주세요.",
+//                                    Snackbar.LENGTH_SHORT).show();
+//                            updateUI(null);
+//                            anime_layout.setVisibility(View.GONE);
+//                            pb.setVisibility(View.INVISIBLE);
+//                        }
+//                    }
+//                });
+//    }
+//
+//    //로그인 메소드
+//    private void loginUser(String email, String password) {
+//        pb.setVisibility(View.VISIBLE);
+//        anime_layout.setVisibility(View.VISIBLE);
+//        mAuth.signInWithEmailAndPassword(email, password)
+//                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+//                    @Override
+//                    public void onComplete(Task<AuthResult> task) {
+//                        if (task.isSuccessful()) {
+//                            // Sign in success, update UI with the signed-in user's information
+//                            Log.d(TAG, "signInWithEmail:success");
+//                            Snackbar.make(getCurrentFocus(), "로그인 되었습니다.",
+//                                    Snackbar.LENGTH_SHORT).show();
+//                            FirebaseUser user = mAuth.getCurrentUser();
+//                            updateUI(user);
+//
+//                            pb.setVisibility(View.INVISIBLE);
+//                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+//                            startActivity(intent);
+//                            finish();
+//
+//                        } else {
+//                            pb.setVisibility(View.INVISIBLE);
+//                            anime_layout.setVisibility(View.GONE);
+//                            // If sign in fails, display a message to the user.
+//                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+//                            Snackbar.make(getCurrentFocus(), "입력값을 다시 확인하세요",
+//                                    Snackbar.LENGTH_SHORT).show();
+//                            updateUI(null);
+//                        }
+//                    }
+//                });
+//    }
+//
 
     //FirebaseAuth.AuthStateListener 구현
     private void authStateL() {

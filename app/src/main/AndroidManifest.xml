@@ -45,7 +45,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Memo.MemoActivity"/>
+        <activity android:name=".MainMenuItem.Memo.MemoActivity"/>
+        <activity android:name=".MainMenuItem.ColorActivity"/>
 
         <receiver android:name=".VoiceApi.TestReceiver">
             <intent-filter>

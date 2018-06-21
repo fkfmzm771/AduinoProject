@@ -12,8 +12,15 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:background="#ffffff"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="1dp">
+
+        </LinearLayout>
+        <LinearLayout
+            android:background="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="49dp">
 
         </LinearLayout>
 
