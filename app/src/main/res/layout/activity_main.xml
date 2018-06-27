@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#272727"
+    android:background="#403a60"
     android:orientation="vertical"
     tools:context="naveropenapi.example.com.aduinoproject.MainActivity">
 
@@ -28,14 +28,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="bottom"
-            sothree:umanoPanelHeight="50dp"
+            sothree:umanoPanelHeight="30dp"
             sothree:umanoShadowHeight="10dp">
 
             <include
                 layout="@layout/app_bar_drower"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
 
             <fragment
                 android:layout_width="match_parent"

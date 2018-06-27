@@ -2,20 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+              android:padding="10dp"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txt_test"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="AR실행창"
-        android:textColor="#ffffff"/>
+    <!--<view-->
+        <!--android:id="@+id/youtubeView"-->
+        <!--class="com.google.android.youtube.player.YouTubePlayerView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="200dp" />-->
 
     <LinearLayout
-        android:background="#000000"
+        android:gravity="center"
+        android:background="#404d58"
         android:layout_width="match_parent"
-        android:layout_height="1dp">
+        android:layout_height="match_parent">
+        <TextView
+            android:textColor="#ffffff"
+            android:text="미사키 AR 미니 버전(제작중)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
 
     </LinearLayout>
 

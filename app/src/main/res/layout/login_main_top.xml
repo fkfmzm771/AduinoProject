@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#39414a"
+    android:background="#403a60"
     android:gravity="center"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"

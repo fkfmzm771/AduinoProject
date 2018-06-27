@@ -6,16 +6,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import naveropenapi.example.com.aduinoproject.FireBase.FireBaseDB;
 import naveropenapi.example.com.aduinoproject.R;
 
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
-    private List<ChatModel> mChat = new ArrayList<>();
-    private String email;
+    private List<ChatModel> mChat = null;
+    private FireBaseDB mFireBaseDB;
 
     private final int MISAKI = 1;
     private final int USER = 2;
@@ -29,17 +29,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         public ViewHolder(View itemview) {
             super(itemview);
-            chat_comment = (TextView) itemview.findViewById(R.id.chat_comment);
-            chat_time = (TextView) itemview.findViewById(R.id.chat_time);
+            chat_comment = itemview.findViewById(R.id.chat_comment);
+            chat_time = itemview.findViewById(R.id.chat_time);
         }
     }
 
 
     //생성자
-    public MyAdapter(List<ChatModel> mChat, String email) {
-        this.mChat = mChat;
-        this.email = email;
-
+    public ChatAdapter(List<ChatModel> chatlist) {
+        this.mChat = chatlist;
+        this.mFireBaseDB = new FireBaseDB();
     }
 
 
@@ -47,19 +46,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public int getItemViewType(int position) {
 
         if (position < mChat.size()) {
-            if ((mChat.get(position).getEmail()).equals(email)) {
+            if ((mChat.get(position).getType()).equals("USER")) {
                 return USER;
-            } else if ((mChat.get(position).getEmail()).equals("MISAKI")) {
+            } else if ((mChat.get(position).getType()).equals("MISAKI")) {
                 return MISAKI;
             }
         }
         return FOOTER;
-
-
     }
 
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ChatAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = null;
 
@@ -81,13 +78,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (position < mChat.size()) {
-            holder.chat_comment.setText(mChat.get(position).getComment());
-            holder.chat_time.setText(mChat.get(position).getTime());
+                holder.chat_comment.setText(mChat.get(position).getComment());
+                holder.chat_time.setText(mChat.get(position).getTime());
         }
-
-
     }
-
 
     @Override
     public int getItemCount() {

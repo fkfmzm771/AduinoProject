@@ -68,13 +68,9 @@ public class MainCardViewAdapter extends RecyclerView.Adapter<MainCardViewAdapte
                         mContext.startActivity(intent);
                         Log.e("리사이클", "인텐트" );
                         break;
-
                 }
             }
         });
-
-
-
     }
 
     @Override

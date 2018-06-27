@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ToxicBakery.viewpager.transforms.BackgroundToForegroundTransformer;
+import com.ToxicBakery.viewpager.transforms.CubeInTransformer;
+import com.ToxicBakery.viewpager.transforms.CubeOutTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.google.firebase.auth.FirebaseAuth;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
@@ -27,27 +32,21 @@ import naveropenapi.example.com.aduinoproject.NetWork.C_BlueTooth;
 import naveropenapi.example.com.aduinoproject.Ui.BackPressCloseHandler;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewAdapter;
 import naveropenapi.example.com.aduinoproject.Ui.MainCardViewItem;
-import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
+import naveropenapi.example.com.aduinoproject.Ui.MainViewPager.PagerAdapter;
 import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceRecoService;
 
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
-
-    //다이얼로그 플로어
-
-    public GoogleVoice googleVoice;
-
-
-    //view 객체 생성
+    private ViewPager vp;
 
     private C_BlueTooth blueTooth;
 
-    private static String voice_result = "";
     final int ITEM_SIZE = 4;
 
     //백 프레스
     BackPressCloseHandler backPressCloseHandler;
+    FloatingActionButton fab;
 
 
     @Override
@@ -56,29 +55,33 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
 
-        backPressCloseHandler = new BackPressCloseHandler(this);
+        backPressCloseHandler = new BackPressCloseHandler(MainActivity.this);
+        vp = findViewById(R.id.menu_list);
+        vp.setAdapter(new PagerAdapter(getSupportFragmentManager()));
+        vp.setPageTransformer(true, new CubeOutTransformer());
+        vp.setCurrentItem(50);
+
 
 
         //다이얼로그 플로어 객체 생성
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.menu_list);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(layoutManager);
+//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.menu_list);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(layoutManager);
 
-        List<MainCardViewItem> items = new ArrayList<>();
-        MainCardViewItem[] item = new MainCardViewItem[ITEM_SIZE];
-        item[0] = new MainCardViewItem(R.drawable.menu_color, "");
-        item[1] = new MainCardViewItem(R.drawable.menu_sound, "");
-        item[2] = new MainCardViewItem(R.drawable.menu_command, "");
-        item[3] = new MainCardViewItem(R.drawable.menu_memo, "");
+//        List<MainCardViewItem> items = new ArrayList<>();
+//        MainCardViewItem[] item = new MainCardViewItem[ITEM_SIZE];
+//        item[0] = new MainCardViewItem(R.drawable.menu_color, "");
+//        item[1] = new MainCardViewItem(R.drawable.menu_sound, "");
+//        item[2] = new MainCardViewItem(R.drawable.menu_command, "");
+//        item[3] = new MainCardViewItem(R.drawable.menu_memo, "");
+//
+//        for (int i = 0; i < ITEM_SIZE; i++) {
+//            items.add(item[i]);
+//        }
 
-        for (int i = 0; i < ITEM_SIZE; i++) {
-            items.add(item[i]);
-        }
-
-        recyclerView.setAdapter(new MainCardViewAdapter(MainActivity.this, items, R.layout.activity_main));
-
+//        recyclerView.setAdapter(new MainCardViewAdapter(MainActivity.this, items, R.layout.activity_main));
 
 
 //        mEditReceive = (TextView) findViewById(R.id.receiveString);
@@ -97,11 +100,13 @@ public class MainActivity extends AppCompatActivity implements
 //            }
 //        });
 
+
+
+
         // 블루투스 활성화 시키는 메소드
         if (blueTooth != null) {
             blueTooth = new C_BlueTooth(this);
         }
-
 
 
         //네비게이션 드로어 구현
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
         //플로팅버튼 호출
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,7 +168,6 @@ public class MainActivity extends AppCompatActivity implements
             }
 
         }
-
 
 
         super.onActivityResult(requestCode, resultCode, data);
@@ -240,8 +244,17 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
+        //보이스 상시대기
 //        startService(new Intent(MainActivity.this, VoiceRecoService.class));
-//        startService(new Intent(MainActivity.this,VoiceRecoService.class));
+        
+        Intent in = getIntent();
+        boolean voice_call = in.getBooleanExtra("VOICE_CALL", false);
+
+        if (voice_call) {
+            SlidingUpPanelLayout slidingUpPanelLayout = findViewById(R.id.sliding_layout);
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+        }
+
 //        startService(new Intent(MainActivity.this,MyService.class));
         super.onStart();
     }

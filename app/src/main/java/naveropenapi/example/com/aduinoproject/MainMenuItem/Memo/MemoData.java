@@ -6,31 +6,31 @@ package naveropenapi.example.com.aduinoproject.MainMenuItem.Memo;
 
 public class MemoData {
 
-    private String date;
-    private String memo_in;
+    private String time;
+    private String memo;
 
     public MemoData() {
     }
 
-    public MemoData(String date, String memo_in) {
-        this.date = date;
-        this.memo_in = memo_in;
+    public MemoData(String time, String memo) {
+        this.time = time;
+        this.memo = memo;
 
     }
 
-    public String getDate() {
-        return date;
+    public String getTime() {
+        return time;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getMemo_in() {
-        return memo_in;
+    public String getMemo() {
+        return memo;
     }
 
-    public void setMemo_in(String memo_in) {
-        this.memo_in = memo_in;
+    public void setMemo(String memo) {
+        this.memo = memo;
     }
 }

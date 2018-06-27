@@ -5,51 +5,42 @@ package naveropenapi.example.com.aduinoproject.DB;
  */
 
 public class ChatModel {
-    private String id;
-    private String email;
     private String comment;
     private String time;
+    private String type;
+
+    public String getComment() {
+        return comment;
+    }
 
     public String getTime() {
         return time;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public void setTime(String time) {
         this.time = time;
     }
 
-    public String getId() {
-        return id;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
-    public String getEmail() {
-        return email;
-    }
+    public ChatModel(){
 
-    public void setEmail(String email) {
-        this.email = email;
     }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public ChatModel() {
-    }
-
-    public ChatModel(String id, String email, String comment, String time) {
-        this.id = id;
-        this.email = email;
+    public ChatModel(String comment, String time, String type) {
         this.comment = comment;
         this.time = time;
-
+        this.type = type;
     }
 }

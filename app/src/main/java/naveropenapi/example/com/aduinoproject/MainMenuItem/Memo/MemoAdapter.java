@@ -4,27 +4,77 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
 import java.util.ArrayList;
 
 import naveropenapi.example.com.aduinoproject.R;
 
 
-/**
- * Created by hyunungLim on 2018-06-21.
- */
+public class MemoAdapter extends BaseSwipeAdapter {
 
-public class MemoAdapter extends BaseAdapter{
+    private Context mContext;
+    private ArrayList<MemoData> memoList;
 
-    private ArrayList<MemoData> mMemoData = new ArrayList<>();
+    public MemoAdapter(Context mContext, ArrayList<MemoData> memoList) {
+        this.mContext = mContext;
+        this.memoList = memoList;
+    }
 
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
 
+    @Override
+    public View generateView(int position, ViewGroup parent) {
+
+//        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        View view = inflater.inflate(R.layout.memo_item_layout, parent, false);
+
+        View view = LayoutInflater.from(mContext).inflate(R.layout.memo_item_layout, null);
+        SwipeLayout swipeLayout = view.findViewById(getSwipeLayoutResourceId(position));
+        swipeLayout.addSwipeListener(new SimpleSwipeListener() {
+            @Override
+            public void onOpen(SwipeLayout layout) {   //스와이프 설정
+                YoYo.with(Techniques.Tada).duration(500).delay(100).playOn(layout.findViewById(R.id.trash));
+            }
+        });
+        swipeLayout.setOnDoubleClickListener(new SwipeLayout.DoubleClickListener() {   //스와이프 더블 클릭
+            @Override
+            public void onDoubleClick(SwipeLayout layout, boolean surface) {
+                Toast.makeText(mContext, "DoubleClick", Toast.LENGTH_SHORT).show();
+            }
+        });
+        view.findViewById(R.id.delete).setOnClickListener(new View.OnClickListener() {      //스와이프 딜리트 설정
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
+            }
+        });
+        return view;
+    }
+
+    @Override
+    public void fillValues(int position, View convertView) {    //기본 뷰 처리
+
+            TextView date = convertView.findViewById(R.id.text_day);
+            date.setText(memoList.get(position).getTime());
+        System.out.println("출력체크"+ memoList.get(position).getTime());
+            TextView text = convertView.findViewById(R.id.text_data);
+            text.setText(memoList.get(position).getMemo());
+    }
 
     @Override
     public int getCount() {
-        return mMemoData.size();
+        return memoList.size();
     }
 
     @Override
@@ -35,36 +85,5 @@ public class MemoAdapter extends BaseAdapter{
     @Override
     public long getItemId(int position) {
         return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        final int pos = position;
-        final Context context = parent.getContext();
-
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.memo_item_layout, parent, false);
-
-        }
-
-        TextView memoDate = convertView.findViewById(R.id.memodate);
-        TextView memo_in= convertView.findViewById(R.id.memo_in);
-
-        MemoData memoData = mMemoData.get(position);
-
-        memoDate.setText(memoData.getDate());
-        memo_in.setText(memoData.getMemo_in());
-
-
-        return convertView;
-
-    }
-
-    public void addMemoItem(String date, String memoIn){
-        MemoData memoData = new MemoData(date, memoIn);
-        mMemoData.add(memoData);
-
-
     }
 }
