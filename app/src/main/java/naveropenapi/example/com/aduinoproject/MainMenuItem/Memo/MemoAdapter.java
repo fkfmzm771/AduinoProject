@@ -36,9 +36,6 @@ public class MemoAdapter extends BaseSwipeAdapter {
     @Override
     public View generateView(int position, ViewGroup parent) {
 
-//        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View view = inflater.inflate(R.layout.memo_item_layout, parent, false);
-
         View view = LayoutInflater.from(mContext).inflate(R.layout.memo_item_layout, null);
         SwipeLayout swipeLayout = view.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {

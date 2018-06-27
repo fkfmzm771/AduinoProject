@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity implements
     final int ITEM_SIZE = 4;
 
     //백 프레스
-    BackPressCloseHandler backPressCloseHandler;
-    FloatingActionButton fab;
+    private BackPressCloseHandler backPressCloseHandler;
+    private FloatingActionButton fab;
 
 
     @Override

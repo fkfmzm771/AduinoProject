@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -60,6 +61,8 @@ public class MemoActivity extends AppCompatActivity {
 
     private Context mContext;
 
+    private String position;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,6 +115,16 @@ public class MemoActivity extends AppCompatActivity {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
+            }
+        });
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("ListView", "onclick:" + position);
+                addLayout.setVisibility(View.VISIBLE);
+                setPosition(position);
+                memotxt.setText(mMemoData.get(position).getMemo());
             }
         });
 
@@ -178,6 +191,7 @@ public class MemoActivity extends AppCompatActivity {
                             .child(NaverLogin.mOAuthLoginModule.getRefreshToken(mContext))
                             .child("Memo").child(formatDate1));
                 }
+                memo.put("number", position);
                 memo.put("time", formatDate1);
                 memo.put("memo", txt);
                 mFireBaseDB.getMyRef().setValue(memo);
@@ -226,14 +240,18 @@ public class MemoActivity extends AppCompatActivity {
         });
     }
 
+    //리스트 포지션 셋
+    void setPosition(int position) {
+        this.position = String.valueOf(position);
+    }
+
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         mSpeechRecognizer.stopListening();
         if (addLayout.getVisibility() == View.VISIBLE) {
             addLayout.setVisibility(View.INVISIBLE);
         } else {
-            finish();
+            super.onBackPressed();
         }
     }
 
