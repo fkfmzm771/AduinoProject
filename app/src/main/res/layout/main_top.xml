@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-              android:padding="10dp"
-    android:orientation="vertical">
+    android:layout_height="180dp"
+              android:padding="5dp"
+    android:orientation="horizontal">
 
     <!--<view-->
         <!--android:id="@+id/youtubeView"-->
@@ -12,13 +12,29 @@
         <!--android:layout_height="200dp" />-->
 
     <LinearLayout
+        android:layout_marginRight="5dp"
+        android:layout_weight="1"
         android:gravity="center"
         android:background="#404d58"
-        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <TextView
             android:textColor="#ffffff"
             android:text="미사키 AR 미니 버전(제작중)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:gravity="center"
+        android:background="@drawable/back_misaki_op"
+        android:layout_width="140dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="능력치창"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

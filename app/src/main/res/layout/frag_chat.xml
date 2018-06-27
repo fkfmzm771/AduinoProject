@@ -1,83 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/frag_chat_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:orientation="vertical">
 
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent">
 
         <LinearLayout
-            android:gravity="center"
-            android:background="#5b6770"
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-            <ImageView
-                android:src="@drawable/chat_bar_icon"
-                android:layout_width="15dp"
-                android:layout_height="15dp"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+            android:id="@+id/frag_chat_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1">
+            android:background="#ffffff"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerViewChat"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="#5b6770"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/chat_bar_icon"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#ffffff"
-                android:scrollbars="vertical">
+                android:layout_marginTop="5dp"
+                android:layout_weight="1">
 
-            </android.support.v7.widget.RecyclerView>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerViewChat"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:scrollbars="vertical">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_margin="5dp"
-        android:background="@drawable/back_typing"
-        android:elevation="5dp"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp">
-
-        <EditText
-            android:background="@null"
-            android:id="@+id/edit_main"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:textSize="15dp" />
+            android:layout_height="50dp"
+            android:layout_gravity="bottom"
+            android:layout_margin="5dp"
+            android:background="@drawable/back_typing"
+            android:elevation="5dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp">
 
-        <Button
-            android:id="@+id/btn_main"
-            android:layout_width="80dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/back_button"
-            android:layout_weight="0"
-            android:text="send" />
+            <EditText
+                android:id="@+id/edit_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textSize="15dp"/>
 
-        <Button
-            android:id="@+id/btn_voice"
-            android:layout_width="80dp"
-            android:textColor="#ffffff"
-            android:background="@drawable/back_button2"
-            android:layout_height="match_parent"
-            android:layout_weight="0"
-            android:text="voice" />
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_main"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:background="@drawable/back_button"
+                android:text="send"/>
+
+            <Button
+                android:id="@+id/btn_voice"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0"
+                android:background="@drawable/back_button2"
+                android:text="voice"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
 
 
-
-</FrameLayout>
+    </FrameLayout>

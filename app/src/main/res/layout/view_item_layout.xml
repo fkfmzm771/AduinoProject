@@ -48,7 +48,6 @@
             android:layout_marginBottom="4dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
             android:background="@drawable/back_misaki"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"

@@ -11,8 +11,8 @@ import android.util.Log;
 import java.util.ArrayList;
 
 import naveropenapi.example.com.aduinoproject.DB.FragChat;
-import naveropenapi.example.com.aduinoproject.DB.TTScall;
 import naveropenapi.example.com.aduinoproject.MainActivity;
+import naveropenapi.example.com.aduinoproject.MainMenuItem.Memo.MemoActivity;
 
 public class TestReceiver extends BroadcastReceiver {
 
@@ -36,21 +36,39 @@ public class TestReceiver extends BroadcastReceiver {
                 .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
         for (int i = 0; i < matches.size(); i++) {
             Log.e(TAG, "onResults text : " + matches.get(i));
-            if (matches.get(i).equals("미사키")) {
-                Log.e(TAG, "onResults text : " + "네 주인님");
-                Intent intent1 = new Intent(context.getApplicationContext(), MainActivity.class);
-                intent1.putExtra("VOICE_CALL",true);
-                PendingIntent pi = PendingIntent.getActivity(
-                        context,
-                        0,
-                        intent1,
-                        PendingIntent.FLAG_ONE_SHOT);
-                try {
-                    FragChat.mDialogFlow.voice_start_Rcv();
-                    pi.send();
-                } catch (PendingIntent.CanceledException e) {
-                    e.printStackTrace();
-                }
+            switch (matches.get(i)) {
+                case "미사키":
+                    Log.e(TAG, "onResults text : " + "네 주인님");
+                    Intent intent1 = new Intent(context.getApplicationContext(), MainActivity.class);
+                    intent1.putExtra("VOICE_CALL", true);
+                    PendingIntent pi1 = PendingIntent.getActivity(
+                            context,
+                            0,
+                            intent1,
+                            PendingIntent.FLAG_ONE_SHOT);
+                    try {
+                        FragChat.mDialogFlow.voice_start_Rcv(1);
+                        pi1.send();
+                    } catch (PendingIntent.CanceledException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "메모장":
+                    Log.e(TAG, "onResults text : " + "네 주인님");
+                    Intent intent2 = new Intent(context.getApplicationContext(), MemoActivity.class);
+                    intent2.putExtra("MEMO_CALL", true);
+                    PendingIntent pi2 = PendingIntent.getActivity(
+                            context,
+                            0,
+                            intent2,
+                            PendingIntent.FLAG_ONE_SHOT);
+                    try {
+                        FragChat.mDialogFlow.voice_start_Rcv(2);
+                        pi2.send();
+                    } catch (PendingIntent.CanceledException e) {
+                        e.printStackTrace();
+                    }
+                    break;
 
             }
 

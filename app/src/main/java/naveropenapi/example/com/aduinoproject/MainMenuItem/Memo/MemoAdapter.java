@@ -14,18 +14,27 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import naveropenapi.example.com.aduinoproject.FireBase.FireBaseDB;
+import naveropenapi.example.com.aduinoproject.Login.LoginCheck;
+import naveropenapi.example.com.aduinoproject.Login.NaverLogin;
 import naveropenapi.example.com.aduinoproject.R;
 
 
 public class MemoAdapter extends BaseSwipeAdapter {
 
     private Context mContext;
-    private ArrayList<MemoData> memoList;
+    private List<MemoData> memoList;
+
+    private FireBaseDB mFireBaseDB;
 
     public MemoAdapter(Context mContext, ArrayList<MemoData> memoList) {
         this.mContext = mContext;
         this.memoList = memoList;
+        mFireBaseDB = new FireBaseDB();
+
     }
 
     @Override
@@ -35,6 +44,7 @@ public class MemoAdapter extends BaseSwipeAdapter {
 
     @Override
     public View generateView(int position, ViewGroup parent) {
+
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.memo_item_layout, null);
         SwipeLayout swipeLayout = view.findViewById(getSwipeLayoutResourceId(position));
@@ -54,6 +64,7 @@ public class MemoAdapter extends BaseSwipeAdapter {
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "click delete", Toast.LENGTH_SHORT).show();
+
             }
         });
         return view;
@@ -83,4 +94,7 @@ public class MemoAdapter extends BaseSwipeAdapter {
     public long getItemId(int position) {
         return position;
     }
+
+
+
 }

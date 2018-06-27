@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
 
     <LinearLayout
-        android:background="#e7e7df"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#e7e7df"
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/memo_appBarLayout"
@@ -26,37 +28,50 @@
 
         </android.support.design.widget.AppBarLayout>
 
-
-        <ListView
-            android:id="@+id/memoListView"
-            android:layout_weight="1"
+        <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/main_swipe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </ListView>
-
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/memoAdd"
-            android:textSize="25dp"
-            android:textColor="#EE6394D9"
-            android:background="@drawable/back_memo_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="+" />
+            android:layout_height="match_parent">
 
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ListView
+                    android:id="@+id/memoListView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                </ListView>
+
+                <Button
+                    android:id="@+id/memoAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/back_memo_add"
+                    android:text="+"
+                    android:textColor="#EE6394D9"
+                    android:textSize="25dp"/>
+
+            </LinearLayout>
+
+        </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
     </LinearLayout>
 
     <!--입력 레이아웃-->
     <!--기본값 숨겨짐-->
     <LinearLayout
         android:id="@+id/memo_add_layout"
-        android:visibility="invisible"
-        android:background="#403b60"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="#403b60"
+        android:orientation="vertical"
+        android:visibility="invisible">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/memo_appBarLayout2"
@@ -74,44 +89,44 @@
         </android.support.design.widget.AppBarLayout>
 
         <EditText
-            android:gravity="top"
-            android:padding="20dp"
             android:id="@+id/memoText"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:textSize="20dp"
-            android:background="@drawable/back_memo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/back_memo"
+            android:gravity="top"
+            android:padding="20dp"
+            android:textSize="20dp"/>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <Button
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="3"
                 android:id="@+id/memoButton"
-                android:background="@drawable/back_memo_b2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="음성 입력" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="3"
+                android:background="@drawable/back_memo_b2"
+                android:text="음성 입력"/>
 
             <Button
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="7"
                 android:id="@+id/memoSave"
-                android:background="@drawable/back_memo_b1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="저장" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="7"
+                android:background="@drawable/back_memo_b1"
+                android:text="저장"/>
         </LinearLayout>
     </LinearLayout>
 

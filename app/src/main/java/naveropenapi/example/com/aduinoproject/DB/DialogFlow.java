@@ -74,10 +74,15 @@ public class DialogFlow extends FireBaseDB implements AIListener {
     }
 
     //음성입력
-    public void voice_start_Rcv() {
+    public void voice_start_Rcv(int i) {
         Log.e(TAG, "리시버 보이스 플로어 시작");
-        mTTScall.ttsStart("부르셨나요");
-        aiService.startListening();
+        if (i == 1) {
+            aiService.startListening();
+            mTTScall.ttsStart("부르셨어요?");
+        }
+        if (i == 2) {
+            mTTScall.ttsStart("메모장을 열었어요");
+        }
     }
 
     //텍스트 전송을 위해 Task 작성
@@ -210,7 +215,7 @@ public class DialogFlow extends FireBaseDB implements AIListener {
                     .child(getUser().getUid())
                     .child("ChatBot")
                     .child(formatDate1));
-        }else if (LoginCheck.NaverCheck){
+        } else if (LoginCheck.NaverCheck) {
             input_Ref(getDatabase()
                     .getReference("MemberToken")
                     .child(NaverLogin.mOAuthLoginModule.getRefreshToken(mContext))

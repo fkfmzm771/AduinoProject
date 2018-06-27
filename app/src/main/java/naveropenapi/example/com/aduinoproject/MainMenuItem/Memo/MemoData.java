@@ -6,22 +6,15 @@ package naveropenapi.example.com.aduinoproject.MainMenuItem.Memo;
 
 public class MemoData {
 
-    private String number;
     private String time;
     private String memo;
 
     public MemoData() {
     }
 
-
-    public MemoData(String number, String time, String memo) {
-        this.number = number;
+    public MemoData(String time, String memo) {
         this.time = time;
         this.memo = memo;
-    }
-
-    public String getNumber() {
-        return number;
     }
 
     public String getTime() {

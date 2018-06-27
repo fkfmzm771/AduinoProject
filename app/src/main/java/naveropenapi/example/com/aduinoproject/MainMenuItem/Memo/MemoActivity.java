@@ -2,6 +2,7 @@ package naveropenapi.example.com.aduinoproject.MainMenuItem.Memo;
 
 import android.content.Context;
 import android.media.AudioManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognitionListener;
@@ -34,7 +35,9 @@ import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import naveropenapi.example.com.aduinoproject.DB.ChatModel;
+import naveropenapi.example.com.aduinoproject.DB.FragChat;
 import naveropenapi.example.com.aduinoproject.FireBase.FireBaseDB;
 import naveropenapi.example.com.aduinoproject.Login.LoginCheck;
 import naveropenapi.example.com.aduinoproject.Login.NaverLogin;
@@ -49,20 +52,33 @@ public class MemoActivity extends AppCompatActivity {
     private AudioManager am;
     private SpeechRecognizer mSpeechRecognizer;
     private GoogleVoice mGoogleVoice;
-    private GoogleRecognition mGoogleRecognition;
 
     private LinearLayout addLayout;
     private MemoAdapter mMemoAdapter;
     private ListView mListView;
-
     private FireBaseDB mFireBaseDB;
-
     private ArrayList<MemoData> mMemoData;
-
     private Context mContext;
-
     private String position;
 
+    private String backupText = "";
+
+    private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
+
+
+    //스와이프레이아웃 AsyncTask
+    private class Task extends AsyncTask<Void, Void, String[]> {
+        @Override
+        protected String[] doInBackground(Void... voids) {
+            return new String[0];
+        }
+        @Override
+        protected void onPostExecute(String[] result) {
+            // Call setRefreshing(false) when the list has been refreshed.
+            mWaveSwipeRefreshLayout.setRefreshing(false);
+            super.onPostExecute(result);
+        }
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,14 +87,24 @@ public class MemoActivity extends AppCompatActivity {
         mContext = getApplicationContext();
         mFireBaseDB = new FireBaseDB();
 
+        //스와이프 리플래시 레이아웃
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) findViewById(R.id.main_swipe);
+        mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mMemoAdapter.notifyDataSetChanged();
+                new Task().execute();
+            }
+        });
+
+
 
         //시스템 사운드 제어
         am = (AudioManager) this.getSystemService(mContext.AUDIO_SERVICE);
 
         //스피치 초기화
-        mGoogleRecognition = new GoogleRecognition();
         mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
-        mSpeechRecognizer.setRecognitionListener(mGoogleRecognition);
+        mSpeechRecognizer.setRecognitionListener(mRecognitionListener);
         mGoogleVoice = new GoogleVoice(mContext);
         memotxt = findViewById(R.id.memoText);
 
@@ -175,14 +201,17 @@ public class MemoActivity extends AppCompatActivity {
         findViewById(R.id.memoSave).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Hashtable<String, String> memo = new Hashtable<>();
 
+               if (memotxt.getText().equals("")){
+                   Toast.makeText(mContext,"내용을 입력해 주세요",Toast.LENGTH_SHORT).show();
+               }
+                Hashtable<String, String> memo = new Hashtable<>();
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sd1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String formatDate1 = sd1.format(c.getTime());
                 String txt = memotxt.getText().toString();
 
-                if (LoginCheck.GoogleCheck || LoginCheck.FaceCheck) {
+                if (LoginCheck.GoogleCheck) {
                     mFireBaseDB.input_Ref(mFireBaseDB.getDatabase().getReference("MemberToken")
                             .child(mFireBaseDB.getUser().getUid())
                             .child("Memo").child(formatDate1));
@@ -191,7 +220,7 @@ public class MemoActivity extends AppCompatActivity {
                             .child(NaverLogin.mOAuthLoginModule.getRefreshToken(mContext))
                             .child("Memo").child(formatDate1));
                 }
-                memo.put("number", position);
+//                memo.put("number", position);
                 memo.put("time", formatDate1);
                 memo.put("memo", txt);
                 mFireBaseDB.getMyRef().setValue(memo);
@@ -216,7 +245,8 @@ public class MemoActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 MemoData memo = dataSnapshot.getValue(MemoData.class);
-                mMemoData.add(memo);
+                mMemoData.add(0,memo);
+//                mMemoData.add(memo);
                 mMemoAdapter.notifyDataSetChanged();
 
             }
@@ -257,14 +287,61 @@ public class MemoActivity extends AppCompatActivity {
 
 
     private void receiveResults(Bundle results) {
-        String resultText;
+        String resultText = "";
 
         if ((results != null) && results.containsKey(SpeechRecognizer.RESULTS_RECOGNITION)) {
             List<String> heard = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
             resultText = heard.get(0);
-            memotxt.append(resultText);
-
+            Log.e("메모 스피치 테스트", heard.get(0));
         }
+        memotxt.setText(backupText + resultText);
     }
 
+
+    private RecognitionListener mRecognitionListener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle bundle) {
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {
+            Log.e("메모 스피치 테스트","메모 스피치 시작");
+            if (!memotxt.getText().equals("")){
+                backupText = memotxt.getText().toString();
+            }
+        }
+
+        @Override
+        public void onRmsChanged(float v) {
+        }
+
+        @Override
+        public void onBufferReceived(byte[] bytes) {
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+            Log.e("메모 스피치 테스트","메모 스피치 종료");
+        }
+
+        @Override
+        public void onError(int i) {
+        }
+
+        @Override
+        public void onResults(Bundle bundle) {
+        }
+
+        @Override
+        public void onPartialResults(Bundle bundle) {
+            receiveResults(bundle);
+        }
+
+        @Override
+        public void onEvent(int i, Bundle bundle) {
+        }
+    };
 }
+
+
+

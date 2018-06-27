@@ -10,8 +10,7 @@
         android:id="@+id/pager_memo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:background="#5b6770"
+        android:background="#7996ac"
         android:gravity="center">
         <TextView
             android:text="MEMO"

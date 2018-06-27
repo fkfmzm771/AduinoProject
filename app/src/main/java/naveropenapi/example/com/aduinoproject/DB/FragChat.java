@@ -1,6 +1,7 @@
 package naveropenapi.example.com.aduinoproject.DB;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import naveropenapi.example.com.aduinoproject.FireBase.FireBaseDB;
 import naveropenapi.example.com.aduinoproject.Login.LoginCheck;
 import naveropenapi.example.com.aduinoproject.Login.NaverLogin;
@@ -46,6 +48,8 @@ public class FragChat extends Fragment {
     private List<ChatModel> chatList;
 
 
+
+
     void setView() {
         mRecyclerView = view.findViewById(R.id.recyclerViewChat);
         editText = view.findViewById(R.id.edit_main);
@@ -59,6 +63,7 @@ public class FragChat extends Fragment {
 
     }
 
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -71,6 +76,9 @@ public class FragChat extends Fragment {
         fireBaseDB = new FireBaseDB();
 
 
+
+
+        //리사이클뷰 셋
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
 //        mRecyclerView.setLayoutManager(new GridLayoutManager(context, 4));
@@ -152,6 +160,11 @@ public class FragChat extends Fragment {
         return view;
     }
 
+
+
+
+
+
     //키보드 hide 설정
     public void hideKey() {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
@@ -163,4 +176,8 @@ public class FragChat extends Fragment {
         super.onDestroy();
 
     }
+
+
+
 }
+
