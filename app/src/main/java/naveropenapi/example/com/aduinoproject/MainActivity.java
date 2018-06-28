@@ -1,6 +1,7 @@
 package naveropenapi.example.com.aduinoproject;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -28,8 +29,11 @@ import naveropenapi.example.com.aduinoproject.VoiceApi.VoiceRecoService;
 
 public class MainActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
+    public static SharedSave sSharedSave;
+
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
+    private Toolbar mToolbar;
     private C_BlueTooth blueTooth;
 
     final int ITEM_SIZE = 4;
@@ -39,13 +43,27 @@ public class MainActivity extends AppCompatActivity implements
     private FloatingActionButton fab;
 
 
+    private void setColor() {
+        sSharedSave.getColor();
+        if (sSharedSave.getColorData() != 0) {
+            mTabLayout.setBackgroundColor(sSharedSave.getColorData());
+            mToolbar.setBackgroundColor(sSharedSave.getColorData());
+            if (Build.VERSION.SDK_INT >= 21) {
+                getWindow().setStatusBarColor(MainActivity.sSharedSave.getColorData());
+            }
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sSharedSave = new SharedSave(getApplicationContext());
 
-        mTabLayout = findViewById(R.id.tabLay);
+        mToolbar = findViewById(R.id.main_toolbar);
+
+        mTabLayout = findViewById(R.id.main_tabLay);
         backPressCloseHandler = new BackPressCloseHandler(MainActivity.this);
         mViewPager = findViewById(R.id.menu_list);
         mViewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
@@ -53,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements
 //        mViewPager.setCurrentItem(50);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        setColor();
 
 
         //다이얼로그 플로어 객체 생성
@@ -93,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements
 //        });
 
 
-
-
         // 블루투스 활성화 시키는 메소드
         if (blueTooth != null) {
             blueTooth = new C_BlueTooth(this);
@@ -102,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements
 
 
         //네비게이션 드로어 구현
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
 
         //플로팅버튼 호출
@@ -119,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
@@ -178,12 +195,11 @@ public class MainActivity extends AppCompatActivity implements
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
-
+            //보이스 상시대기
+//        startService(new Intent(MainActivity.this, VoiceRecoService.class));
 
         } else if (id == R.id.btn_logout) {  //로그아웃 버튼
-//            LoginActivity.mAuth.signOut();
             FirebaseAuth.getInstance().signOut();
-
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -212,7 +228,6 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-  
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -231,9 +246,9 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStart() {
-        //보이스 상시대기
-//        startService(new Intent(MainActivity.this, VoiceRecoService.class));
-        
+        setColor();
+
+
         Intent in = getIntent();
         boolean voice_call = in.getBooleanExtra("VOICE_CALL", false);
 
@@ -257,6 +272,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onResume() {
+        setColor();
         super.onResume();
 
     }

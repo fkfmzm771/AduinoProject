@@ -14,12 +14,9 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.BaseSwipeAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import naveropenapi.example.com.aduinoproject.FireBase.FireBaseDB;
-import naveropenapi.example.com.aduinoproject.Login.LoginCheck;
-import naveropenapi.example.com.aduinoproject.Login.NaverLogin;
 import naveropenapi.example.com.aduinoproject.R;
 
 
@@ -46,7 +43,7 @@ public class MemoAdapter extends BaseSwipeAdapter {
     public View generateView(int position, ViewGroup parent) {
 
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.memo_item_layout, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.menu_memo_item_layout, null);
         SwipeLayout swipeLayout = view.findViewById(getSwipeLayoutResourceId(position));
         swipeLayout.addSwipeListener(new SimpleSwipeListener() {
             @Override

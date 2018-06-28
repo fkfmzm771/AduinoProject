@@ -1,4 +1,4 @@
-package naveropenapi.example.com.aduinoproject.MainMenuItem.Color;
+package naveropenapi.example.com.aduinoproject.MainMenuItem.Command;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -8,12 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.larswerkman.holocolorpicker.ColorPicker;
-import com.larswerkman.holocolorpicker.OpacityBar;
-import com.larswerkman.holocolorpicker.SVBar;
-import com.larswerkman.holocolorpicker.SaturationBar;
-import com.larswerkman.holocolorpicker.ValueBar;
-
 import naveropenapi.example.com.aduinoproject.MainActivity;
 import naveropenapi.example.com.aduinoproject.R;
 
@@ -21,47 +15,21 @@ import naveropenapi.example.com.aduinoproject.R;
  * Created by hyunungLim on 2018-06-21.
  */
 
-public class ColorActivity extends AppCompatActivity {
-    private ColorPicker picker;
-    private SVBar svBar;
-    private OpacityBar opacityBar;
-    private SaturationBar saturationBar;
-    private ValueBar valueBar;
+public class CommandActivity extends AppCompatActivity {
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.menu_color_layout);
+        setContentView(R.layout.menu_command_layout);
 
-        mToolbar = findViewById(R.id.color_toolbar);
-        mTabLayout = findViewById(R.id.color_tabLay);
-
-        picker = (ColorPicker) findViewById(R.id.picker);
-        svBar = (SVBar) findViewById(R.id.svbar);
-        opacityBar = (OpacityBar) findViewById(R.id.opacitybar);
-        saturationBar = (SaturationBar) findViewById(R.id.saturationbar);
-        valueBar = (ValueBar) findViewById(R.id.valuebar);
-
+        mToolbar = findViewById(R.id.command_toolbar);
+        mTabLayout = findViewById(R.id.command_tabLay);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        
 
-        picker.addSVBar(svBar);
-        picker.addOpacityBar(opacityBar);
-        picker.addSaturationBar(saturationBar);
-        picker.addValueBar(valueBar);
-
-        picker.setOnColorChangedListener(new ColorPicker.OnColorChangedListener() {
-            @Override
-            public void onColorChanged(int color) {
-//                mToolbar.setBackgroundColor(color);
-                MainActivity.sSharedSave.setColorData(color);
-                setColor();
-            }
-        });
     }
 
     @Override
@@ -97,5 +65,4 @@ public class ColorActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

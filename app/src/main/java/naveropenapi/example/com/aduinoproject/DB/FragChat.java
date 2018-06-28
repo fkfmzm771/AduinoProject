@@ -1,7 +1,7 @@
 package naveropenapi.example.com.aduinoproject.DB;
 
 import android.content.Context;
-import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -23,10 +24,10 @@ import com.google.firebase.database.DatabaseError;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 import naveropenapi.example.com.aduinoproject.FireBase.FireBaseDB;
 import naveropenapi.example.com.aduinoproject.Login.LoginCheck;
 import naveropenapi.example.com.aduinoproject.Login.NaverLogin;
+import naveropenapi.example.com.aduinoproject.MainActivity;
 import naveropenapi.example.com.aduinoproject.R;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -47,6 +48,7 @@ public class FragChat extends Fragment {
     private View view;
     private List<ChatModel> chatList;
 
+    private LinearLayout fragChatView;
 
 
 
@@ -55,6 +57,7 @@ public class FragChat extends Fragment {
         editText = view.findViewById(R.id.edit_main);
         btn_voice = view.findViewById(R.id.btn_voice);
         btn_main = view.findViewById(R.id.btn_main);
+        fragChatView = view.findViewById(R.id.frag_chat_view);
     }
 
     @Override
@@ -74,8 +77,6 @@ public class FragChat extends Fragment {
 
         mDialogFlow = new DialogFlow(context);
         fireBaseDB = new FireBaseDB();
-
-
 
 
         //리사이클뷰 셋
@@ -116,11 +117,13 @@ public class FragChat extends Fragment {
             fireBaseDB.input_Ref(fireBaseDB.getDatabase().getReference("MemberToken")
                     .child(fireBaseDB.getUser().getUid())
                     .child("ChatBot"));
+
         } else if (LoginCheck.NaverCheck) {
             fireBaseDB.input_Ref(fireBaseDB.getDatabase().getReference("MemberToken")
                     .child(NaverLogin.mOAuthLoginModule.getRefreshToken(context))
                     .child("ChatBot"));
         }
+        
         fireBaseDB.getMyRef().addChildEventListener(new ChildEventListener() {
             //자식값이 추가될때 실행되는 메소드
             @Override
@@ -161,10 +164,6 @@ public class FragChat extends Fragment {
     }
 
 
-
-
-
-
     //키보드 hide 설정
     public void hideKey() {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(INPUT_METHOD_SERVICE);
@@ -174,10 +173,13 @@ public class FragChat extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
 
 }
 

@@ -3,14 +3,16 @@ package naveropenapi.example.com.aduinoproject.MainMenuItem.Memo;
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsListView;
@@ -21,13 +23,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.daimajia.swipe.util.Attributes;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,13 +34,11 @@ import java.util.Hashtable;
 import java.util.List;
 
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
-import naveropenapi.example.com.aduinoproject.DB.ChatModel;
-import naveropenapi.example.com.aduinoproject.DB.FragChat;
 import naveropenapi.example.com.aduinoproject.FireBase.FireBaseDB;
 import naveropenapi.example.com.aduinoproject.Login.LoginCheck;
 import naveropenapi.example.com.aduinoproject.Login.NaverLogin;
+import naveropenapi.example.com.aduinoproject.MainActivity;
 import naveropenapi.example.com.aduinoproject.R;
-import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleRecognition;
 import naveropenapi.example.com.aduinoproject.VoiceApi.GoogleVoice;
 
 public class MemoActivity extends AppCompatActivity {
@@ -65,6 +61,9 @@ public class MemoActivity extends AppCompatActivity {
 
     private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
 
+    private Toolbar mToolbar1;
+    private Toolbar mToolbar2;
+
 
     //스와이프레이아웃 AsyncTask
     private class Task extends AsyncTask<Void, Void, String[]> {
@@ -72,6 +71,7 @@ public class MemoActivity extends AppCompatActivity {
         protected String[] doInBackground(Void... voids) {
             return new String[0];
         }
+
         @Override
         protected void onPostExecute(String[] result) {
             // Call setRefreshing(false) when the list has been refreshed.
@@ -81,9 +81,32 @@ public class MemoActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home: { //toolbar의 back키 눌렀을 때 동작
+                finish();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setColor() {
+        MainActivity.sSharedSave.getColor();
+        if (MainActivity.sSharedSave.getColorData() != 0) {
+            mToolbar1.setBackgroundColor(MainActivity.sSharedSave.getColorData());
+            if (Build.VERSION.SDK_INT >= 21) {
+                getWindow().setStatusBarColor(MainActivity.sSharedSave.getColorData());
+            }
+        }
+    }
+
+
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.memo_layout);
+        setContentView(R.layout.menu_memo_layout);
         mContext = getApplicationContext();
         mFireBaseDB = new FireBaseDB();
 
@@ -97,7 +120,13 @@ public class MemoActivity extends AppCompatActivity {
             }
         });
 
+        mToolbar1 = findViewById(R.id.memo_toolbar);
+        mToolbar2 = findViewById(R.id.memo_toolbar2);
 
+        setSupportActionBar(mToolbar1);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        setColor();
 
         //시스템 사운드 제어
         am = (AudioManager) this.getSystemService(mContext.AUDIO_SERVICE);
@@ -202,9 +231,9 @@ public class MemoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               if (memotxt.getText().equals("")){
-                   Toast.makeText(mContext,"내용을 입력해 주세요",Toast.LENGTH_SHORT).show();
-               }
+                if (memotxt.getText().equals("")) {
+                    Toast.makeText(mContext, "내용을 입력해 주세요", Toast.LENGTH_SHORT).show();
+                }
                 Hashtable<String, String> memo = new Hashtable<>();
                 Calendar c = Calendar.getInstance();
                 SimpleDateFormat sd1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -245,7 +274,7 @@ public class MemoActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 MemoData memo = dataSnapshot.getValue(MemoData.class);
-                mMemoData.add(0,memo);
+                mMemoData.add(0, memo);
 //                mMemoData.add(memo);
                 mMemoAdapter.notifyDataSetChanged();
 
@@ -305,8 +334,8 @@ public class MemoActivity extends AppCompatActivity {
 
         @Override
         public void onBeginningOfSpeech() {
-            Log.e("메모 스피치 테스트","메모 스피치 시작");
-            if (!memotxt.getText().equals("")){
+            Log.e("메모 스피치 테스트", "메모 스피치 시작");
+            if (!memotxt.getText().equals("")) {
                 backupText = memotxt.getText().toString();
             }
         }
@@ -321,7 +350,7 @@ public class MemoActivity extends AppCompatActivity {
 
         @Override
         public void onEndOfSpeech() {
-            Log.e("메모 스피치 테스트","메모 스피치 종료");
+            Log.e("메모 스피치 테스트", "메모 스피치 종료");
         }
 
         @Override
@@ -341,6 +370,16 @@ public class MemoActivity extends AppCompatActivity {
         public void onEvent(int i, Bundle bundle) {
         }
     };
+
+    @Override
+    protected void onStart() {
+        setColor();
+        super.onStart();
+    }
+
+
+
+
 }
 
 

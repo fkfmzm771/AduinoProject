@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="naveropenapi.example.com.aduinoproject.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/command__appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/command_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <TextView
+                android:id="@+id/command_toolbar_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="COMMAND"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText"/>
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/command_tabLay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="음성 인식 호출 단어"
+                android:textSize="15dp"/>
+
+            <EditText
+                android:textSize="13dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/back_misaki"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="미사키(기본값)"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="메모장 열기"
+                android:textSize="15dp"/>
+
+            <EditText
+                android:textSize="13dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/back_misaki"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="메모장 열어(기본값)"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="음성 메모"
+                android:textSize="15dp"/>
+
+            <EditText
+                android:textSize="13dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/back_misaki"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="메모 시작(기본값)"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:text="메모 저장"
+                android:textSize="15dp"/>
+
+            <EditText
+                android:textSize="13dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:background="@drawable/back_misaki"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint="메모 저장(기본값)"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
