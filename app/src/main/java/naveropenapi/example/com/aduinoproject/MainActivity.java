@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements
     private Toolbar mToolbar;
     private C_BlueTooth blueTooth;
 
+    private boolean VOICEON = false;
+
     final int ITEM_SIZE = 4;
 
     //백 프레스
@@ -195,8 +197,15 @@ public class MainActivity extends AppCompatActivity implements
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            if (VOICEON == false) {
+                startService(new Intent(MainActivity.this, VoiceRecoService.class));
+                VOICEON = true;
+            }else if (VOICEON == true){
+                stopService(new Intent(MainActivity.this, VoiceRecoService.class));
+                VOICEON = false;
+            }
+
             //보이스 상시대기
-//        startService(new Intent(MainActivity.this, VoiceRecoService.class));
 
         } else if (id == R.id.btn_logout) {  //로그아웃 버튼
             FirebaseAuth.getInstance().signOut();
